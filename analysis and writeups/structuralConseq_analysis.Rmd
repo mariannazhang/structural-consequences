@@ -1,0 +1,486 @@
+---
+title             : "Consequences of a structural construal for normativity, possibility of change, intervention"
+shorttitle        : "Title"
+
+author: 
+  - name          : "Marianna Y. Zhang"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Building 420, 450 Jane Stanford Way, Stanford, CA 94305"
+    email         : "marianna.zhang@stanford.edu"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1"
+
+author: 
+  - name          : "Ellen M. Markman"
+    affiliation   : "1"
+    corresponding : no
+    address       : "Building 420, 450 Jane Stanford Way, Stanford, CA 94305"
+    email         : "markman@stanford.edu"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1"
+affiliation:
+  - id            : "1"
+    institution   : "Stanford University"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "structural thinking, categories, explanation, normativity, possibility of change"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa7"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+require("knitr")
+library("papaja")
+library(tidyverse)  # tidying and wrangling data, visualizations
+library(ggthemes)   # visualization themes for ggplot2
+library(paramtest)  # power analysis
+library(lmerTest)   # linear mixed effects model
+library(brms)       # Bayesian mixed effects model
+library(tidybayes)  # Bayes factor
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+```{r vis-theme}
+# Set visualization theme
+theme_set(
+  ggthemes::theme_few() +
+  theme(text = element_text(size = 16)) # large text size for presentation figures
+)
+```
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) --> 
+
+This project's [repository](https://github.com/mariannazhang/structural-consequences) and [preregistration](https://osf.io/hz76n/) can be found online.
+
+
+```{r predictions-set}
+predicted_means <- tibble(
+  construal = rep(c("Internalist (biological)", "Internalist (cultural)", "Structural"), each = 3),
+  measure = rep(c("Possibility of change", "Normativity", "Target of intervention"), times = 3),
+  response = c(0.2, #Internalist (biological) - possibility_change - low
+               0.8, #Internalist (biological) - normativity - high
+               0.2, #Internalist (biological) - intervention - on internal
+               0.5, #Internalist (cultural) - possibility_change - med
+               0.8, #Internalist (cultural) - normativity - high
+               0.5, #Internalist (cultural) - intervention - on culture
+               0.8, #Structural - possibility_change - high
+               0.2, #Structural - normativity - low
+               0.8) #Structural - intervention - on structure
+)
+```
+
+```{r predictions-visualize}
+# Visualize predictions
+ggplot(predicted_means, aes(x = construal, y = response)) +
+  geom_point(size = 4) + 
+  facet_wrap(vars(measure)) + 
+  scale_y_continuous(limits = c(0, 1))
+ggsave("predicted_means.png")
+
+```
+
+```{r power-analysis}
+# Power analysis by simulation, given children's predicted responses
+sample_size = 150
+condition_size = sample_size/3
+
+predicted <- tibble(
+  # Set up table
+  condition = rep(c("Internalist (biological)", "Internalist (cultural)", "Structural"), each = condition_size * 3), #*3 because 3 measures
+  measure = rep(c("Possibility of change", "Normativity", "Target of intervention"), each = condition_size, times = 3), #*3 conditions
+  participant = c(rep(seq(from = 1, to = condition_size, by = 1), times = 3),
+                  rep(seq(from = condition_size + 1, to = condition_size*2, by = 1), times = 3),
+                  rep(seq(from = condition_size*2 + 1, to = condition_size*3, by = 1), times = 3)),
+  
+  
+  # Simulate responses
+  response = 
+    c(#Internalist (biological): Possibility of change
+      sample(c(1, 2, 3, 4), # response options
+             size = condition_size,
+             replace = TRUE,
+             prob = c(0.4, 0.4, 0.2, 0.1)), # weighted mean = 2.2 of 1-4
+      #Internalist (biological): Normativity
+      sample(c(1, 2, 3, 4, 5, 6), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.2, 0.3, 0.2, 0.15, 0.1, 0.05)), # weighted mean = 2.8 of 1-6
+      #Internalist (biological): Target of intervention
+      sample(c("Internal", "Structural", "Other"), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.6, 0.1, 0.3)), 
+      
+      
+      #Internalist (cultural): Possibility of change
+      sample(c(1, 2, 3, 4), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.2, 0.4, 0.25, 0.15)), # weighted mean = 
+      #Internalist (cultural): Normativity
+      sample(c(1, 2, 3, 4, 5, 6), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.15, 0.3, 0.25, 0.15, 0.1, 0.05)), # weighted mean = 2.9 of 1-6
+      #Internalist (cultural): Target of intervention
+      sample(c("Internal", "Structural", "Other"), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.4, 0.3, 0.3)), 
+      
+      
+      #Structural: Possibility of change
+      sample(c(1, 2, 3, 4), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.1, 0.2, 0.4, 0.3)), # weighted mean = 2.9 of 1-4
+      #Structural: Normativity
+      sample(c(1, 2, 3, 4, 5, 6), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.05, 0.1, 0.2, 0.25, 0.3, 0.1)),
+      #Structural: Target of intervention
+      sample(c("Internal", "Structural", "Other"), 
+             size = condition_size, 
+             replace = TRUE,
+             prob = c(0.2, 0.6, 0.2))) # weighted mean = 3.95 of 1-6
+  
+)
+
+
+# Summarize simulated responses
+predicted_summary <- predicted %>% 
+  group_by(condition, measure) %>% 
+  summarize(avg = mean(response, na.rm = TRUE),
+            sd = sd(response, na.rm = TRUE), 
+            n = length(unique(participant)))
+
+
+# Plot: possibility of change
+ggplot(predicted %>% filter(measure == "Possibility of change"), aes(x = condition, y = response)) +
+  ggtitle("Possibility of change: simulated data") +
+  scale_y_continuous(breaks = c(1, 2, 3, 4),
+                     labels = c("For sure no: 1", "Maybe no: 2", "Maybe yes: 3", "For sure yes: 4")) + 
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.05),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) 
+ggsave("predicted_possibility_change.png")
+
+# Plot: normativity
+ggplot(predicted %>% filter(measure == "Normativity"), aes(x = condition, y = response)) +
+  ggtitle("Normativity: simulated data") +
+  scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6),
+                     labels = c("Very, very bad: 1", "Pretty bad: 2", "A little bad: 3", "A little good: 4", "Pretty good: 5", "Very, very good: 6")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.05),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("predicted_normativity.png")
+
+
+# Plot: target of intervention
+ggplot(predicted %>% filter(measure == "Target of intervention"), aes(x = condition, fill = factor(response, levels = c("Internal", "Structural", "Other")))) +
+  guides(fill = guide_legend(title = "Target of intervention")) +
+  scale_y_continuous(name = "Percentage of participants") +
+  ggtitle("Target of intervention: simulated data") +
+  geom_bar(position = "fill")
+ggsave("predicted_intervention.png")
+
+
+
+# Statistical analysis: possibility of change
+lm(response ~ condition,
+   data = predicted %>% filter(measure == "Possibility of change", condition == "Internalist (biological)" | condition == "Structural")) %>% 
+  summary()
+
+# Statistical analysis: normativity
+lm(response ~ condition,
+   data = predicted %>% filter(measure == "Normativity", condition == "Internalist (biological)" | condition == "Structural")) %>% 
+  summary()
+
+
+# Statistical analysis: target of intervention
+# Fix me
+
+```
+
+
+## Participants
+
+```{r import-data}
+# Import pilot data for analysis
+data <- read_csv("../data/structuralConsequences_data_pilot_coded.csv")
+```
+
+```{r clean-data}
+# Filter out those who didn't consent
+data <- data %>%
+  filter(Consent == "I do consent to participate") %>% 
+  select(-Consent)
+
+# Add participant ID
+data <- data %>% 
+  mutate(participant = row_number())
+
+
+# Coalesce redundant columns
+
+# Keep columns we care about
+data <- data %>% 
+  select(RecordedDate,
+         participant, 
+         condition, 
+         calibrate_poss_1:ses, # check/fixme
+         ) 
+
+# Remove line breaks in responses
+
+
+# Convert age to number
+data$age <- data$age %>% 
+  as.numeric()
+
+```
+
+```{r exclude}
+# Record exclusions
+data <- data %>% 
+  summarize(check_group_berry = sum(check_group_berry != "Vawns"),
+            check_group = sum(check_group != "Zarpies, Vawns"),
+            check_berry = sum(check_berry != "Pogoberries, Okinberries"), 
+            check_task = sum(check_task != "Learning about Zarpies and answering questions about them"))
+
+# Exclude participants and remove exclusion columns
+data <- data %>%
+  filter(check_group_berry = "Vawns" &
+           check_group == "Zarpies, Vawns" &
+           check_berry == "Pogoberries, Okinberries" &
+           check_task == "Learning about Zarpies and answering questions about them") %>% #fixme
+  select(-starts_with("check"))
+
+
+```
+
+```{r sample-size}
+# Record number of participants in actual sample after exclusions
+n.adults <- data %>% 
+  nrow()
+```
+
+```{r dem}
+# Record demographics of actual sample
+## Age
+dem.age <- data %>%
+  count(age)
+
+## Gender
+dem.gender <- data %>%
+  count(gender)
+
+## Race
+dem.race <- data %>%
+  count(race)
+
+## Education
+dem.education <- data %>%
+  count(education)
+
+## Socio-economic status (SES)
+dem.SES <- data %>%
+  count(SES)
+
+```
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses. 
+
+Participants were excluded for failing the attention checks.
+<!-- data cleaning rules, data exclusion rules, covariates, etc. Key analysis of interest. Can also pre-specify additional analyses you plan to do.-->
+
+
+```{r recode-tidy}
+# Recode dependent measures into numerical values
+data$possibility_change <- 
+  recode(data$possibility_change,
+         "For sure no" = 1,
+         "Maybe no" = 2,
+         "Maybe yes" = 3,
+         "For sure yes" = 4)
+
+data$normativity <- 
+  recode(data$normativity,
+         "Very, very good" = 1,
+         "Pretty good" = 2,
+         "A little good" = 3,
+         "A little bad" = 4,
+         "Pretty bad" = 5,
+         "Very, very bad" = 6)
+
+data$intervention_diff <- 
+  recode(data$intervention_diff,
+         "Very easy" = 1,
+         "Somewhat easy" = 2,
+         "Somewhat difficult" = 3,
+         "Very difficult" = 4)
+
+# Gather long data to tidy form
+data.tidy <- data %>% 
+  gather(measure, response, "possibility_change":"intervention_diff")
+
+
+# Order questions
+data.tidy$measure <- data.tidy$measure %>% 
+  factor(levels = c("possibility_change", "normativity", "intervention", "intervention_diff"))
+
+```
+
+# Results
+```{r description-visualization}
+# Plot responses: possibility of change
+ggplot(data %>% filter(measure == "Possibility of change"), aes(x = condition, y = response)) +
+  ggtitle("Possibility of change") +
+  scale_y_continuous(breaks = c(1, 2, 3, 4),
+                     labels = c("For sure no: 1", "Maybe no: 2", "Maybe yes: 3", "For sure yes: 4")) + 
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.05),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) 
+ggsave("possibility_change.png")
+
+# Plot responses: normativity
+ggplot(data %>% filter(measure == "Normativity"), aes(x = condition, y = response)) +
+  ggtitle("Normativity") +
+  scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6),
+                     labels = c("Very, very bad: 1", "Pretty bad: 2", "A little bad: 3", "A little good: 4", "Pretty good: 5", "Very, very good: 6")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.05),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("normativity.png")
+
+
+```
+
+```{r target-analysis}
+# Linear model of response by condition, for each measure
+
+# Possibility of change
+lm(response ~ condition,
+   data = data %>% filter(measure == "Possibility of change", condition == "Internalist (biological)" | condition == "Structural")) %>% 
+  summary()
+
+# Normativity
+lm(response ~ condition,
+   data = data %>% filter(measure == "Normativity", condition == "Internalist (biological)" | condition == "Structural")) %>% 
+  summary()
+```
+
+```{r exploratory-analysis}
+# 
+
+```
+
+
+# Discussion
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup
