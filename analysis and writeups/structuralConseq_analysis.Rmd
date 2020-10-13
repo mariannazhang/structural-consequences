@@ -242,11 +242,12 @@ ggsave("predicted_normativity.png")
 
 
 # Plot: target of intervention
-ggplot(predicted %>% filter(measure == "Target of intervention"), aes(x = condition, fill = factor(response, levels = c("Internal", "Structural", "Other")))) +
+ggplot(predicted %>% filter(measure == "Target of intervention"), 
+       aes(x = condition, fill = factor(response, levels = c("Internal", "Structural", "Other")))) +
+  geom_bar(position = "fill") +
   guides(fill = guide_legend(title = "Target of intervention")) +
   scale_y_continuous(name = "Percentage of participants") +
-  ggtitle("Target of intervention: simulated data") +
-  geom_bar(position = "fill")
+  ggtitle("Target of intervention") 
 ggsave("predicted_intervention.png")
 
 
@@ -287,6 +288,8 @@ data <- data %>%
 
 
 # Coalesce redundant columns
+data <- data %>% 
+  mutate(normativity = coalesce(normativity_notOkay, normativity_okay))
 
 # Keep columns we care about
 data <- data %>% 
@@ -404,7 +407,8 @@ data.tidy$measure <- data.tidy$measure %>%
 # Results
 ```{r description-visualization}
 # Plot responses: possibility of change
-ggplot(data %>% filter(measure == "Possibility of change"), aes(x = condition, y = response)) +
+ggplot(data %>% filter(measure == "Possibility of change"), 
+       aes(x = condition, y = response)) +
   ggtitle("Possibility of change") +
   scale_y_continuous(breaks = c(1, 2, 3, 4),
                      labels = c("For sure no: 1", "Maybe no: 2", "Maybe yes: 3", "For sure yes: 4")) + 
@@ -425,7 +429,8 @@ ggplot(data %>% filter(measure == "Possibility of change"), aes(x = condition, y
 ggsave("possibility_change.png")
 
 # Plot responses: normativity
-ggplot(data %>% filter(measure == "Normativity"), aes(x = condition, y = response)) +
+ggplot(data %>% filter(measure == "Normativity"), 
+       aes(x = condition, y = response)) +
   ggtitle("Normativity") +
   scale_y_continuous(breaks = c(1, 2, 3, 4, 5, 6),
                      labels = c("Very, very bad: 1", "Pretty bad: 2", "A little bad: 3", "A little good: 4", "Pretty good: 5", "Very, very good: 6")) +
@@ -444,6 +449,16 @@ ggplot(data %>% filter(measure == "Normativity"), aes(x = condition, y = respons
                fill = "black",
                size = 5)
 ggsave("normativity.png")
+
+
+# Plot: target of intervention
+ggplot(data %>% filter(measure == "Target of intervention"), 
+       aes(x = condition, fill = factor(response, levels = c("Internal", "Structural", "Other")))) +
+  geom_bar(position = "fill") +
+  guides(fill = guide_legend(title = "Target of intervention")) +
+  scale_y_continuous(name = "Percentage of participants") +
+  ggtitle("Target of intervention") 
+ggsave("intervention.png")
 
 
 ```
