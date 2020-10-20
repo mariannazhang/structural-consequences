@@ -1,0 +1,516 @@
+StartDate,EndDate,Status,IPAddress,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,RecipientLastName,RecipientFirstName,RecipientEmail,ExternalReference,LocationLatitude,LocationLongitude,DistributionChannel,UserLanguage,consent,calibrate_poss_1,calibrate_poss_2,calibrate_norm_1,calibrate_norm_2,check_group_berry,possibility_change,normativity_fc,normativity_notOkay,normativity_okay,intervention,intervention_diff,check_group,check_berry,check_task,age,gender,gender_4_TEXT,race,race_15_TEXT,education,ses,debrief_1,debrief_2,debrief_3,condition
+Start Date,End Date,Response Type,IP Address,Progress,Duration (in seconds),Finished,Recorded Date,Response ID,Recipient Last Name,Recipient First Name,Recipient Email,External Data Reference,Location Latitude,Location Longitude,Distribution Channel,User Language,"STUDY TITLE: Comparison processing in children
+
+ 
+
+PROTOCOL DIRECTOR:  Marianna Zhang
+
+ 
+
+DESCRIPTION:  You are invited to participate in a research study on language and social categories. You will be asked to read short sentences, read short excerpts from children’s books, answer short questions, produce or select sentences, rate items on various traits, or produce descriptions of items. You may see material intended for children – we are interested in how adults think about the same material. The purpose of this research is to understand the cognitive processes underlying language and social categorization. 
+
+ 
+
+TIME INVOLVEMENT:  Your participation will take approximately 3-5 minutes.
+
+ 
+
+RISKS AND BENEFITS:  There are no risks associated with this study.  No benefits may reasonably be expected to result from this study. We cannot and do not guarantee or promise that you will receive any benefits from this study.
+
+ 
+
+PAYMENTS:  You will receive $0.66 through Amazon Payments as payment for your participation.
+
+ 
+
+SUBJECT'S RIGHTS:  If you have read this form and have decided to participate in this project, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.  The alternative is not to participate.  You have the right to refuse to answer particular questions.  Your individual privacy will be maintained in all published and written data resulting from the study.  No personally identifying information is ever revealed to the researchers.
+
+ 
+
+CONTACT INFORMATION:
+
+Questions:  If you have any questions, concerns or complaints about this research, its procedures, risks and benefits, contact the Protocol Director, Marianna Zhang, at stanford.markman.lab@gmail.com.
+
+ 
+
+Independent Contact:  If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at (650) 723-2480 or toll free at 1-866-680-2906.  You can also write to the Stanford IRB, Stanford University, 3000 El Camino Real, Five Palo Alto Square, 4th Floor, Palo Alto, CA 94306.
+
+ 
+
+Please print a copy of this page for your records.
+
+ 
+
+If you agree to participate in this research, please complete and submit the following questionnaire.",Can people shower in the morning instead of at night?,Can people walk through walls?,"Is
+it okay or not okay if someone steals money from their friend?","Is
+it okay or not okay if someone gives their friend a gift?",Which group usually eats okinberries?,"Can Zarpies also eat okinberries?
+
+       ?","Look, here’s a Zarpie who eats okinberries.
+
+
+
+
+
+Is it okay or not okay for this Zarpie to eat okinberries?","Is it a little bad, pretty bad, or very, very bad?","Is it a little good, pretty good, or very, very good?","If you could make anything happen, what would you do, so that the Zarpies can eat okinberries? Please list at least 1 specific action you would do.","How easy or difficult would it be to do the action you suggested above? If you suggested more than one action, just rate the first action you listed.","In this task, what groups were mentioned? Check all groups mentioned.","In this task, what berries were mentioned? Check all berries mentioned.",This task involved:,How old are you? Please enter your age in years:,How would you describe your gender identity? - Selected Choice,"How would you describe your gender identity? - Prefer to self-describe, please specify: - Text",How would you describe your racial or ethnic identity? - Selected Choice,"How would you describe your racial or ethnic identity? - Some other racial/ethnic identity, please specify: - Text",What is the highest level of education you have completed?,Which social class group do you identify with?,"We are still testing and making changes to this task, so we would appreciate any feedback below! (optional) - Did you have any problems with this survey? Was anything confusing?","We are still testing and making changes to this task, so we would appreciate any feedback below! (optional) - Would you suggest any changes to improve this survey?","We are still testing and making changes to this task, so we would appreciate any feedback below! (optional) - What do you think this study is about?",condition
+"{""ImportId"":""startDate"",""timeZone"":""America/Los_Angeles""}","{""ImportId"":""endDate"",""timeZone"":""America/Los_Angeles""}","{""ImportId"":""status""}","{""ImportId"":""ipAddress""}","{""ImportId"":""progress""}","{""ImportId"":""duration""}","{""ImportId"":""finished""}","{""ImportId"":""recordedDate"",""timeZone"":""America/Los_Angeles""}","{""ImportId"":""_recordId""}","{""ImportId"":""recipientLastName""}","{""ImportId"":""recipientFirstName""}","{""ImportId"":""recipientEmail""}","{""ImportId"":""externalDataReference""}","{""ImportId"":""locationLatitude""}","{""ImportId"":""locationLongitude""}","{""ImportId"":""distributionChannel""}","{""ImportId"":""userLanguage""}","{""ImportId"":""QID64""}","{""ImportId"":""QID89""}","{""ImportId"":""QID88""}","{""ImportId"":""QID91""}","{""ImportId"":""QID92""}","{""ImportId"":""QID105""}","{""ImportId"":""QID93""}","{""ImportId"":""QID44""}","{""ImportId"":""QID103""}","{""ImportId"":""QID104""}","{""ImportId"":""QID85_TEXT""}","{""ImportId"":""QID112""}","{""ImportId"":""QID74""}","{""ImportId"":""QID87""}","{""ImportId"":""QID67""}","{""ImportId"":""QID68_TEXT""}","{""ImportId"":""QID69""}","{""ImportId"":""QID69_4_TEXT""}","{""ImportId"":""QID70""}","{""ImportId"":""QID70_15_TEXT""}","{""ImportId"":""QID71""}","{""ImportId"":""QID86""}","{""ImportId"":""QID72_1""}","{""ImportId"":""QID72_2""}","{""ImportId"":""QID72_3""}","{""ImportId"":""condition""}"
+2020-10-12 09:24:51,2020-10-12 09:26:28,IP Address,72.185.190.207,100,97,True,2020-10-12 09:26:28,R_3q9ldoyUCKGbduP,,,,,28.2136993408203125,-82.68090057373046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,have them share with the varns,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,47,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,none,none,not sure,structural
+2020-10-12 09:24:55,2020-10-12 09:27:02,IP Address,99.130.151.189,100,126,True,2020-10-12 09:27:02,R_OuRy48eg8peAAhz,,,,,35.710906982421875,-78.65940093994140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Make them not alllergic to okinberries.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,46,Female,,Black/African American,,"Bachelor's (B.A., B.S.)",Some college,no.,nothing.,A story of two monsters on a planet.,internalist_biological
+2020-10-12 09:24:49,2020-10-12 09:27:08,IP Address,99.155.202.109,100,138,True,2020-10-12 09:27:08,R_1F56CuOXM9Ixl84,,,,,33.1555023193359375,-96.49810028076171875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,A little bad,,Tell them nothing bad will happen if they eat the berries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,45,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no issues,no suggestions,literally being able or not able to do something and if it's okay if you change habits,internalist_cultural
+2020-10-12 09:25:06,2020-10-12 09:27:32,IP Address,108.254.224.255,100,146,True,2020-10-12 09:27:32,R_xD6owDkZjXQeRNf,,,,,34.632293701171875,-89.885498046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Convert the okinberries to pogoberries,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Female,,White/European American,,Some college,High school/GED,No,No,I'm not sure,internalist_biological
+2020-10-12 09:25:02,2020-10-12 09:27:43,IP Address,108.64.75.194,100,160,True,2020-10-12 09:27:43,R_1odpoXFBR28BIt4,,,,,38.0662994384765625,-122.165496826171875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would make the okinberries give good luck.,Somewhat difficult,"Zarpies,Glerks","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,no,no,internalist_cultural
+2020-10-12 09:25:03,2020-10-12 09:28:09,IP Address,73.26.185.245,100,185,True,2020-10-12 09:28:09,R_3NDlBjf11TdhPGv,,,,,32.28790283203125,-106.75910186767578125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,Pretty good,I would ask if the Vawns can send some okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,57,Female,,White/European American,,"Master's (M.A., M.S.)",High school/GED,No problems,I can't think of changes,Teaching children to reason,structural
+2020-10-12 09:25:00,2020-10-12 09:28:09,IP Address,98.192.156.105,100,188,True,2020-10-12 09:28:09,R_2CPcbk6fKzEbdsF,,,,,30.5402069091796875,-84.14459991455078125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Change the color,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,43,Female,,"White/European American,Black/African American,Asian/Asian American",,Some college,Some college,,,,internalist_biological
+2020-10-12 09:25:28,2020-10-12 09:28:09,IP Address,73.152.56.226,100,161,True,2020-10-12 09:28:09,R_1lnMG6gF3qIDQ28,,,,,37.5146942138671875,-77.5034027099609375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,too far away,Very difficult,Zarpies,Pogoberries,Learning about Zarpies and answering questions about them,34,Male,,"White/European American,Black/African American",,"Bachelor's (B.A., B.S.)",Some college,no,no,how we view foofd and what peopel eat,structural
+2020-10-12 09:26:11,2020-10-12 09:28:21,IP Address,66.116.6.246,100,130,True,2020-10-12 09:28:22,R_3JrC3PZoiGlvl3K,,,,,39.4795989990234375,-88.3755035400390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",Maybe yes,Okay,,A little good,plant berries near them,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,38,Male,,White/European American,,"Master's (M.A., M.S.)",High school/GED,N/A,N/A,I don't know.,structural
+2020-10-12 09:25:01,2020-10-12 09:28:35,IP Address,70.175.95.203,100,213,True,2020-10-12 09:28:35,R_3O0LqeagVjzkuLm,,,,,33.6194000244140625,-111.955596923828125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,do a magic spell that allows them to eat okinberries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,52,Female,,White/European American,,High school/GED,Some college,,,,internalist_cultural
+2020-10-12 09:26:02,2020-10-12 09:28:35,IP Address,173.242.129.193,100,152,True,2020-10-12 09:28:35,R_3n1y1WQPXIKfpjG,,,,,37.75250244140625,-85.99539947509765625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Make it to where the okinberries don't make the Zarpies sick,Somewhat difficult,"Zarpies,Vawns",Okinberries,Learning about Zarpies and answering questions about them,40,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_biological
+2020-10-12 09:25:38,2020-10-12 09:28:57,IP Address,50.45.187.140,100,199,True,2020-10-12 09:28:57,R_AtG9o9he0DB9qbT,,,,,45.539703369140625,-122.96379852294921875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,live on other side of planet,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,no issues,story retention,internalist_biological
+2020-10-12 09:25:06,2020-10-12 09:29:15,IP Address,65.114.124.139,100,249,True,2020-10-12 09:29:15,R_3RgU8PdzWfckeUu,,,,,36.6089019775390625,-88.3031005859375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would modify the okinberries genetically so that they don't have the components that make the Zarpies sick.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,38,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,No problems here.,I can't think of any improvements.,I'm not sure.,internalist_biological
+2020-10-12 09:24:54,2020-10-12 09:29:22,IP Address,69.126.59.252,100,268,True,2020-10-12 09:29:22,R_5jRaC6CANt8S1B7,,,,,40.8018035888671875,-72.86750030517578125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,Invent a potion they can take so it would be safe for them to eat oikenberries.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,structural
+2020-10-12 09:25:25,2020-10-12 09:29:27,IP Address,104.5.21.103,100,242,True,2020-10-12 09:29:28,R_3EcdbuM3XowDwAw,,,,,41.6226959228515625,-86.24520111083984375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,treat the okinberries so that they are safe to eat by all,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,42,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,no,na,critical thinking,internalist_biological
+2020-10-12 09:25:27,2020-10-12 09:29:34,IP Address,173.47.106.14,100,247,True,2020-10-12 09:29:35,R_3D8A6ucY75EG6Fj,,,,,34.648406982421875,-99.32050323486328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,change their thoughts on them,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,22,Female,,White/European American,,High school/GED,Less than high school,no,n/a,How we perceive minimal information,internalist_cultural
+2020-10-12 09:24:52,2020-10-12 09:29:56,IP Address,68.102.182.181,100,304,True,2020-10-12 09:29:56,R_3nNuR0x2fnDMlZb,,,,,38.374603271484375,-97.67299652099609375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Let them know that it isn't wrong or bad luck for them to eat okinberries,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,Some college,Less than high school,,,,internalist_cultural
+2020-10-12 09:24:58,2020-10-12 09:31:03,IP Address,104.35.170.65,100,365,True,2020-10-12 09:31:04,R_2AWGNspwxIEIqjQ,,,,,34.1483001708984375,-118.0016021728515625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,"share okinberries with Zarpies ",Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,56,Female,,White/European American,,High school/GED,High school/GED,,,,structural
+2020-10-12 09:29:27,2020-10-12 09:32:06,IP Address,68.204.203.77,100,159,True,2020-10-12 09:32:06,R_2ri8YHnsykKkuGh,,,,,28.52740478515625,-81.6011962890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,"Very, very bad",,have it not be poisonous,Somewhat difficult,"Zarpies,Vawns",Pogoberries,Learning about Zarpies and answering questions about them,41,Male,,Click to write Choice 10,carribean,Some college,Some college,no,no,learning,structural
+2020-10-12 09:26:42,2020-10-12 09:32:22,IP Address,67.164.74.58,100,340,True,2020-10-12 09:32:22,R_31N3KVjrl2qAVRG,,,,,37.75579833984375,-121.95269775390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,"I would make public service announcements telling the Zarpies that it is now OK to eat the okinberries since the pogoberry harvest failed.  I would have the ads play often on TV, social media, etc. ",Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,55,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,,,,structural
+2020-10-12 09:25:24,2020-10-12 09:32:23,IP Address,198.228.141.147,100,418,True,2020-10-12 09:32:23,R_wMK04D4ePkCFaF3,,,,,45.4817047119140625,-122.4156036376953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Color okinberries to the Berries they eat.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,38,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No,"The question which asks select all that applies from berries and task about, you should specific what are you speaking about, the overall initial story or the particular one which I just answered.",unable to determine.,internalist_cultural
+2020-10-12 09:30:36,2020-10-12 09:32:29,IP Address,74.222.114.184,100,112,True,2020-10-12 09:32:29,R_1nZoexDfRM6B22C,,,,,33.8820037841796875,-80.40399932861328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,"Very, very good",Put blue juice to make the okinberries look like pogoberries,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,20,Male,,White/European American,,High school/GED,,,,,internalist_cultural
+2020-10-12 09:28:10,2020-10-12 09:35:04,IP Address,68.68.135.161,100,413,True,2020-10-12 09:35:04,R_2rG7JYdGfK4UcAp,,,,,34.264404296875,-78.0590972900390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,I would have them try a small amount at first to get used to it.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,29,Male,,White/European American,,High school/GED,High school/GED,Nothing at all.,I hope my input helps. I would not change anything,It was about two alien species,structural
+2020-10-12 09:25:25,2020-10-12 09:36:39,IP Address,89.187.164.84,100,673,True,2020-10-12 09:36:40,R_3I9kG10VX6PWE5C,,,,,32.7787017822265625,-96.8217010498046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I will try to find a medicine they can use to treat their sickness in the event of eating okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,No problem,,Testing the level of assimilation of people,internalist_biological
+2020-10-12 09:34:04,2020-10-12 09:36:54,IP Address,68.104.142.91,100,170,True,2020-10-12 09:36:54,R_A7qRm8X2iztvwB3,,,,,33.24090576171875,-111.77919769287109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,wash the berries to prevent the zarpies from getting sick,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,"White/European American,Black/African American",,"Bachelor's (B.A., B.S.)",Less than high school,,,,internalist_biological
+2020-10-12 09:28:35,2020-10-12 09:37:05,IP Address,173.63.61.15,100,510,True,2020-10-12 09:37:06,R_6XQtwvZ2cAiEPKx,,,,,40.9456939697265625,-74.1826019287109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would try to find more pogoberries in any way possible even if I have to get them at a bigger cost somewhere.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,57,Female,,White/European American,,High school/GED,Some college,No,"The hit was okay, just hope I remembered the names of the berries",About wrong and right,internalist_biological
+2020-10-12 09:33:18,2020-10-12 09:38:03,IP Address,76.14.195.160,100,285,True,2020-10-12 09:38:03,R_DdC1fArMFz4g8Qp,,,,,44.9929046630859375,-122.765899658203125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Search the planet for okinberries,Very difficult,Zarpies,"Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,69,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No,No issues,Memory of foreign names and words,internalist_cultural
+2020-10-12 09:35:28,2020-10-12 09:38:08,IP Address,73.189.183.209,100,159,True,2020-10-12 09:38:08,R_3h5vqiWpUL5fEfi,,,,,37.3177032470703125,-121.9380035400390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,cook the okinberries to remove their ingredient that is toxic to zarpies,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Male,,"White/European American,Click to write Choice 7,Click to write Choice 9",,"Bachelor's (B.A., B.S.)",Some college,no,no,see how people interpret small details,internalist_biological
+2020-10-12 09:35:12,2020-10-12 09:38:35,IP Address,73.71.186.189,100,202,True,2020-10-12 09:38:35,R_2pWaeEXubSWbiPA,,,,,38.2400970458984375,-122.039703369140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,Pretty good,Import okinberries from the other side of the planet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Male,,"White/European American,Asian/Asian American",,High school/GED,Some college,Everything was fine.,More information on one page instead of a new picture on each page.,I have no idea at all.,structural
+2020-10-12 09:31:14,2020-10-12 09:38:45,IP Address,51.81.143.142,100,451,True,2020-10-12 09:38:46,R_2B3TGz6csKk2Mnq,,,,,37.751007080078125,-97.82199859619140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"make the okinberries bring good luck
+turn the okinberries into pogoberries",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,21,Male,,Black/African American,,High school/GED,"Master's (M.A., M.S.)",,,,internalist_cultural
+2020-10-12 09:32:14,2020-10-12 09:38:47,IP Address,172.220.227.49,100,393,True,2020-10-12 09:38:48,R_8rgFfbeKPDwnr3z,,,,,35.4665985107421875,-79.1757965087890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,make a medicine that Zarpies can take so other berries will not make them sick,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,everything was fine,"I am not sure. I am guessing it was about real people and what would be the first choices for helping people. Something to do with GMO foods, lol, no idea. ",internalist_biological
+2020-10-12 09:31:46,2020-10-12 09:38:59,IP Address,196.16.110.196,100,433,True,2020-10-12 09:39:00,R_24qpcWo9diQxQXa,,,,,34.0543975830078125,-118.2440032958984375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,"Very, very good",Will harvest again and cultivate it.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,,,,structural
+2020-10-12 09:35:08,2020-10-12 09:39:40,IP Address,108.14.73.174,100,271,True,2020-10-12 09:39:40,R_2wo5MYOvzHuwN5X,,,,,40.579498291015625,-73.98889923095703125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Find a way to suppress the biological response to okinberries that makes Zarpies sick when eating them,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Male,,Click to write Choice 8,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_biological
+2020-10-12 09:30:30,2020-10-12 09:39:54,IP Address,73.194.199.39,100,564,True,2020-10-12 09:39:54,R_3soevTxfEwnMy6l,,,,,39.757598876953125,-74.249603271484375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would change their belief that it's bad luck.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,45,Male,,White/European American,,Some college,Some college,no,none,To understand thoughts on cultures.,internalist_cultural
+2020-10-12 09:36:44,2020-10-12 09:40:29,IP Address,24.105.199.58,100,224,True,2020-10-12 09:40:29,R_SP5yoR2FrKv7QTn,,,,,42.247802734375,-73.753997802734375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,Have them switch living spaces with the other creatures so they can both try each food.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,24,Female,,"White/European American,Black/African American",,"Bachelor's (B.A., B.S.)",Some college,,,,structural
+2020-10-12 09:36:02,2020-10-12 09:41:08,IP Address,72.84.109.234,100,305,True,2020-10-12 09:41:08,R_3RpFfiuLa4zZCXO,,,,,36.796905517578125,-76.1797027587890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Ask the Vawns if they will share,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,44,Female,,White/European American,,High school/GED,High school/GED,no,no,Learning about fictional characters to see if this would be easy for children,structural
+2020-10-12 09:36:24,2020-10-12 09:41:39,IP Address,24.163.96.208,100,315,True,2020-10-12 09:41:39,R_22Y7JM8e2iSSu34,,,,,35.583099365234375,-78.7881011962890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,Tell them it's not bad luck,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,49,Female,,White/European American,,High school/GED,High school/GED,no,"it was cute, no need",not sure,internalist_cultural
+2020-10-12 09:38:45,2020-10-12 09:42:25,IP Address,174.101.136.173,100,219,True,2020-10-12 09:42:25,R_30qNWDxQlAYgvoJ,,,,,39.1497039794921875,-84.42600250244140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would try to help them not get sick from them.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,25,Female,,"White/European American,Black/African American",,Some college,Some college,No.,No.,,internalist_biological
+2020-10-12 09:28:57,2020-10-12 09:42:30,IP Address,73.1.141.162,100,813,True,2020-10-12 09:42:30,R_1Qgfi4oDvlELg4t,,,,,26.5991058349609375,-80.1284027099609375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,I would tell them it is now good luck to eat them.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,68,Female,,White/European American,,High school/GED,High school/GED,no problems,no suggested changes,right and wrong,internalist_cultural
+2020-10-12 09:34:17,2020-10-12 09:44:17,IP Address,98.167.113.206,100,599,True,2020-10-12 09:44:17,R_Z9qlM4AtDZsRRZv,,,,,36.058807373046875,-115.31040191650390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,be friendly with the others,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,no,nothing,I have no idea,structural
+2020-10-12 09:30:19,2020-10-12 09:44:22,IP Address,66.31.112.108,100,843,True,2020-10-12 09:44:22,R_3eaIFKxCUlZZRWM,,,,,42.077392578125,-71.0446014404296875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Maybe give them some medicine so it makes it okay for them to eat the okinberries? Sort of like Lactaid pills for lactose intolerant people?,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No,No,I have no idea.,internalist_biological
+2020-10-12 09:42:06,2020-10-12 09:44:35,IP Address,98.235.48.150,100,148,True,2020-10-12 09:44:35,R_10Z4JPSfbV3pyJw,,,,,40.2743988037109375,-76.70619964599609375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,change the color of the okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,48,Male,,White/European American,,High school/GED,High school/GED,no issues,nothing really,I have no idea,internalist_cultural
+2020-10-12 09:41:25,2020-10-12 09:45:14,IP Address,140.186.218.74,100,228,True,2020-10-12 09:45:14,R_2EFxbdnzbLCABS0,,,,,46.8907012939453125,-96.9257965087890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,A little bad,,Ask someone for them,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Female,,White/European American,,High school/GED,Some college,no,no,I think it was about making choices,structural
+2020-10-12 09:41:54,2020-10-12 09:45:18,IP Address,97.124.227.123,100,203,True,2020-10-12 09:45:18,R_ZErMccKN7CQJn33,,,,,33.5037994384765625,-112.025299072265625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,give seeds,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,n,n,ethics,structural
+2020-10-12 09:41:39,2020-10-12 09:45:31,IP Address,168.235.70.73,100,232,True,2020-10-12 09:45:31,R_37tMEgv4GjF5Ghz,,,,,40.882293701171875,-74.21520233154296875,anonymous,EN,I do consent to participate,Yes,Yes,Not okay,Okay,"
+
+Vawns",For sure yes,Not okay,Pretty bad,,I would remove the part of the okinberries that make them sick.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,Click to write Choice 10,European,"Bachelor's (B.A., B.S.)",Less than high school,no. no.,Humans can walk through walls though.,I have no idea.,internalist_biological
+2020-10-12 09:42:41,2020-10-12 09:45:49,IP Address,173.48.239.240,100,187,True,2020-10-12 09:45:49,R_SZSlUy12cmEb4Fb,,,,,42.2971038818359375,-71.0619964599609375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure yes,Not okay,"Very, very bad",,research that okinerries are safe for them to eat,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,27,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,n/a,n/a,no clue,internalist_cultural
+2020-10-12 09:43:52,2020-10-12 09:46:32,IP Address,73.49.202.17,100,159,True,2020-10-12 09:46:32,R_2fvZ6jPG5SZY8sW,,,,,25.7552032470703125,-80.22930145263671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,teach them that luck does not exist and they can eat whatever they want,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,29,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_cultural
+2020-10-12 09:41:45,2020-10-12 09:47:45,IP Address,68.229.179.165,100,359,True,2020-10-12 09:47:46,R_3O99q61K0MCUeua,,,,,41.1156005859375,-95.9375,anonymous,EN,I do consent to participate,No,No,Okay,Okay,"
+
+Vawns",Maybe no,Not okay,Pretty bad,,I will arrange okinberries for Zarpies,Somewhat difficult,"Zarpies,Vawns",Okinberries,Learning about Zarpies and answering questions about them,40,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,No,Nothing,Nothing,internalist_biological
+2020-10-12 09:45:09,2020-10-12 09:48:24,IP Address,104.175.32.183,100,195,True,2020-10-12 09:48:24,R_26mSnagnzEAHH7s,,,,,34.0675048828125,-118.3520965576171875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,heat up the okinberries.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Male,,Latino/Latina,,High school/GED,High school/GED,,,,internalist_biological
+2020-10-12 09:50:05,2020-10-12 09:52:15,IP Address,67.247.68.1,100,129,True,2020-10-12 09:52:15,R_3M5mhNKN88y1LCi,,,,,43.0641937255859375,-74.3339996337890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Not okay,Pretty bad,,I would give the Zarpies some okinberries.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_cultural
+2020-10-12 09:44:23,2020-10-12 09:53:10,IP Address,75.130.241.243,100,527,True,2020-10-12 09:53:10,R_3q7nQtfwiRnYPI9,,,,,42.2554931640625,-71.7718963623046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,send Zarpies some Okinberries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,40,Female,,Black/African American,,"Master's (M.A., M.S.)",Some college,no,no suggestions,helping others people,structural
+2020-10-12 09:51:11,2020-10-12 09:53:32,IP Address,47.217.149.82,100,141,True,2020-10-12 09:53:32,R_1QGYqzGUjjySblt,,,,,35.7445068359375,-95.34510040283203125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,A little good,I would plant some okinberries on the Zarpies side of the planet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,27,Female,,Asian/Asian American,,Some college,High school/GED,"No, everything was very clear.",I wouldn't suggest anything because it seemed like a very straightforward study.,"I think this study is analyizing grammar and inferences from text. ",structural
+2020-10-12 09:50:47,2020-10-12 09:54:13,IP Address,24.239.52.217,100,205,True,2020-10-12 09:54:13,R_zUqv4V0RTLy7wYx,,,,,41.0995941162109375,-80.75229644775390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"Mix them with something else. ",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,38,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,NA,NA,NA,internalist_biological
+2020-10-12 09:51:58,2020-10-12 09:55:06,IP Address,71.238.41.185,100,187,True,2020-10-12 09:55:06,R_3RrylHuoSzHRhks,,,,,45.440704345703125,-122.779205322265625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"Make it so they will not get sick temporarily ",Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,White/European American,,High school/GED,High school/GED,,,,internalist_biological
+2020-10-12 09:53:34,2020-10-12 09:55:47,IP Address,69.80.85.202,100,132,True,2020-10-12 09:55:47,R_OvPYwQl7AUa88CZ,,,,,33.8820037841796875,-80.40399932861328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Make it so that the Okinberries wouldn't be harmful to them being that they aren't a natural part of their diet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Male,,Black/African American,,Some college,High school/GED,,,,internalist_cultural
+2020-10-12 10:02:19,2020-10-12 10:02:24,IP Address,76.221.209.152,100,5,True,2020-10-12 10:02:24,R_DdaUxMWNDPAWN9L,,,,,42.2967071533203125,-85.20659637451171875,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 09:50:35,2020-10-12 10:03:04,IP Address,141.151.73.239,100,749,True,2020-10-12 10:03:05,R_1OMEeOZZsR7X42H,,,,,39.6732025146484375,-75.71209716796875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,zarpies will try to eat okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,none,cool,To learn about groups in other planet,structural
+2020-10-12 10:02:17,2020-10-12 10:04:27,IP Address,74.96.115.62,100,129,True,2020-10-12 10:04:27,R_1ff0ubQmowRePjP,,,,,38.584503173828125,-76.89409637451171875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure yes,Okay,,Pretty good,The vawns share with the zarpies,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Male,,Black/African American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_cultural
+2020-10-12 10:00:25,2020-10-12 10:05:36,IP Address,74.71.23.203,100,311,True,2020-10-12 10:05:36,R_3QJJQLlOwcbpYHa,,,,,40.8000030517578125,-73.9763031005859375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,Change the color of the okinberries,Somewhat difficult,Zarpies,"Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,35,Male,,Click to write Choice 8,,"Bachelor's (B.A., B.S.)",High school/GED,none,none,Teaching children about a person's belief.,internalist_cultural
+2020-10-12 09:43:17,2020-10-12 10:07:35,IP Address,71.143.154.172,100,1457,True,2020-10-12 10:07:35,R_1hYhwNCv3DR77LE,,,,,33.7574005126953125,-84.4235992431640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would change the colors of the onkinberries.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,The survey is interesting.,send me more surveys.,Consumer survey.,internalist_biological
+2020-10-12 09:40:19,2020-10-12 10:08:33,IP Address,217.138.208.148,100,1693,True,2020-10-12 10:08:33,R_1CJk0GE2OPRFzBO,,,,,40.7156982421875,-74,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,try to supply or tried to plant okinberries at the part of its planet where it stays,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,40,Male,,Black/African American,,"Bachelor's (B.A., B.S.)",High school/GED,no,none,it is about the plant and their habitants,structural
+2020-10-12 10:12:23,2020-10-12 10:15:31,IP Address,97.113.30.4,100,187,True,2020-10-12 10:15:32,R_1r63KtA71TTss3W,,,,,47.5399932861328125,-122.30319976806640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,"Prepare them differently, perhaps mashing them up to change the taste.",Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,32,Male,,White/European American,,High school/GED,High school/GED,None.,Wouldn't change a thing.,How we think creatures adapt to issues.,internalist_cultural
+2020-10-12 10:11:50,2020-10-12 10:17:14,IP Address,98.159.196.54,100,324,True,2020-10-12 10:17:14,R_OD18QotWq3ZVVqp,,,,,34.6179962158203125,-86.0561981201171875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",Maybe no,Not okay,"Very, very bad",,grow them,Somewhat easy,Zarpies,Okinberries,Learning about Zarpies and answering questions about them,32,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,no,unsutr,structural
+2020-10-12 10:12:46,2020-10-12 10:17:20,IP Address,184.91.226.29,100,273,True,2020-10-12 10:17:20,R_1OleoNSylsiAVR7,,,,,29.0247039794921875,-80.95839691162109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,"Very, very good","I would hope the Zarpies can have a friendly visit with the Vawns, who would share their okinberries.",Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,69,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,higher pay,not sure,structural
+2020-10-12 10:19:06,2020-10-12 10:19:10,IP Address,76.180.67.64,100,4,True,2020-10-12 10:19:11,R_1rpjC1nehQTuHwn,,,,,42.9297027587890625,-78.74340057373046875,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 10:13:26,2020-10-12 10:19:13,IP Address,51.81.232.163,100,347,True,2020-10-12 10:19:13,R_3HZhYbSDTsANbn9,,,,,37.751007080078125,-97.82199859619140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,They should prepare to treat sickness.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,27,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_biological
+2020-10-12 10:15:17,2020-10-12 10:19:16,IP Address,108.185.66.225,100,239,True,2020-10-12 10:19:16,R_30wbw6pfEqaGhM5,,,,,33.92120361328125,-118.14239501953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,A little bad,,Make them healthy enough so they can eat them without harm.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,35,Male,,Latino/Latina,,High school/GED,Some college,No problems or confusions.,No suggestions. It was good.,Study how a person might view from the eyes of children and how morally or ethically actions are to those types of audiences.,structural
+2020-10-12 10:17:40,2020-10-12 10:20:28,IP Address,70.104.139.190,100,168,True,2020-10-12 10:20:28,R_2ZEmFYRL0TYAaRq,,,,,40.8135986328125,-73.9384002685546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,I would tell them where to find okinberries.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_cultural
+2020-10-12 10:17:22,2020-10-12 10:20:34,IP Address,47.41.128.85,100,192,True,2020-10-12 10:20:35,R_2qmfD1jAfhhu1X8,,,,,43.081207275390625,-89.38449859619140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,turn okinberries into pogoberries,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,46,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,no,no idea,internalist_biological
+2020-10-12 10:18:46,2020-10-12 10:21:23,IP Address,73.72.4.111,100,156,True,2020-10-12 10:21:23,R_eKZYTJf22JPu9K9,,,,,41.902496337890625,-87.67259979248046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Give them medicine so they don't get sick,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,29,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,no,no,not sure,internalist_biological
+2020-10-12 10:19:39,2020-10-12 10:21:31,IP Address,76.180.67.64,100,111,True,2020-10-12 10:21:31,R_23MstF8Hdo0b4gp,,,,,42.9297027587890625,-78.74340057373046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,Pretty bad,,Make a trade with the Vawnies for okinberries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,White/European American,,Some college,High school/GED,nope,nope,not sure,internalist_cultural
+2020-10-12 10:18:05,2020-10-12 10:22:28,IP Address,47.185.70.61,100,262,True,2020-10-12 10:22:28,R_cuN0nlj8SbK4vNT,,,,,32.932098388671875,-97.2834014892578125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,move to other side of the planet,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,32,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,"No, it was fine.",No,I do not know,structural
+2020-10-12 10:20:36,2020-10-12 10:23:04,IP Address,67.149.68.150,100,148,True,2020-10-12 10:23:04,R_1P2iHcxWjZUGlZ7,,,,,39.98809814453125,-83.0478973388671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,I would make okinberry plants where the Zarpies live so they can eat the okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Male,,White/European American,,Some college,Some college,,,,structural
+2020-10-12 10:18:55,2020-10-12 10:23:33,IP Address,98.204.255.222,100,278,True,2020-10-12 10:23:34,R_300LuywFaYla1hp,,,,,39.6248931884765625,-75.8350982666015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would change what the Zarpies think about all berries so that the can eat any type of berry.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Male,,White/European American,,Some college,High school/GED,None,None,"Logical thinking ",internalist_cultural
+2020-10-12 10:20:08,2020-10-12 10:23:54,IP Address,73.236.40.189,100,225,True,2020-10-12 10:23:55,R_W6yKJiblYJ7VY41,,,,,41.0265960693359375,-80.34980010986328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,"Very, very good",I would make okinberries grow all over the planet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,60,Male,,White/European American,,Some college,High school/GED,"no, no",no,research on attention and comprehension,structural
+2020-10-12 10:23:46,2020-10-12 10:26:32,IP Address,24.208.188.198,100,165,True,2020-10-12 10:26:32,R_27m095ftGseWttk,,,,,40.7415924072265625,-84.15219879150390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,Pretty good,sanitize the berries,Very easy,"Zarpies,Vawns",Okinberries,Learning about Zarpies and answering questions about them,39,Male,,White/European American,,Some college,High school/GED,no,,understanding language i think,internalist_biological
+2020-10-12 10:26:12,2020-10-12 10:27:49,IP Address,66.91.211.85,100,97,True,2020-10-12 10:27:50,R_1rjjJkH1YdaOMkz,,,,,21.28900146484375,-157.80279541015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Mix them with other berries,Somewhat easy,Zarpies,"Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,40,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No,No,Not sure,internalist_biological
+2020-10-12 10:20:53,2020-10-12 10:29:01,IP Address,24.181.229.118,100,487,True,2020-10-12 10:29:01,R_brSJSIH3GtMl7Yl,,,,,42.2554931640625,-71.7718963623046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,A little good,Have the Vawns show them it's ok to eat them.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Male,,White/European American,,Some college,Some college,,,,internalist_cultural
+2020-10-12 10:29:17,2020-10-12 10:30:37,IP Address,32.215.210.207,100,80,True,2020-10-12 10:30:38,R_3hxxhvOWvr02DvZ,,,,,41.81390380859375,-73.11229705810546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,Trade with the other species,Somewhat difficult,"Zarpies,Glerks","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,24,Male,,Click to write Choice 8,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_biological
+2020-10-12 10:35:57,2020-10-12 10:36:06,IP Address,75.70.44.41,100,8,True,2020-10-12 10:36:06,R_273Wf0p37bzK3lX,,,,,39.8661956787109375,-104.97550201416015625,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 10:31:24,2020-10-12 10:37:31,IP Address,64.234.38.62,100,367,True,2020-10-12 10:37:32,R_10C6BxtM7L6H8VD,,,,,34.2239990234375,-82.16249847412109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,A little good,allow them in the area to collect okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,55,Female,,White/European American,,High school/GED,High school/GED,not at all,na,not sure but it was nice,structural
+2020-10-12 10:36:39,2020-10-12 10:40:36,IP Address,107.146.243.120,100,236,True,2020-10-12 10:40:36,R_1LMDbG7OAwBpwXU,,,,,35.297607421875,-119.04840087890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,I would test to make sure they are safe to eat.,Somewhat easy,"Zarpies,Glerks","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Less than high school,None.,None.,I'm not sure.,internalist_cultural
+2020-10-12 10:44:47,2020-10-12 10:47:05,IP Address,24.180.138.70,100,137,True,2020-10-12 10:47:05,R_pAcQjCoCWBmsvPX,,,,,43.1772003173828125,-85.2472991943359375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Try to have them eat a few at a time and see if their bodies can handle the change over time.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Male,,White/European American,,Some college,Some college,,,,internalist_biological
+2020-10-12 10:46:16,2020-10-12 10:49:35,IP Address,76.222.214.144,100,199,True,2020-10-12 10:49:35,R_245Wlf88s0IkBgU,,,,,42.175994873046875,-87.80899810791015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,"teach them that there is no such thing as ""luck""",Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,68,Prefer not to specify,,Click to write Choice 10,,Click to write Choice 7,"Master's (M.A., M.S.)",,,,internalist_cultural
+2020-10-12 10:40:50,2020-10-12 10:51:54,IP Address,70.172.187.42,100,663,True,2020-10-12 10:51:54,R_3e80mpyturnI6u2,,,,,41.5189971923828125,-71.1620025634765625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,Sell okinberries to the Zarpies.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,High school/GED,Some college,Everything was easy to understand,no,I don't know,internalist_cultural
+2020-10-12 10:51:46,2020-10-12 10:53:53,IP Address,172.92.97.132,100,127,True,2020-10-12 10:53:53,R_2sYkysI87FIO7Hr,,,,,48.1009979248046875,-123.43280029296875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,Ask the Vawns to share their okinberries with the Zarpies,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,structural
+2020-10-12 10:48:27,2020-10-12 10:54:45,IP Address,108.253.190.88,100,378,True,2020-10-12 10:54:45,R_1rqzyMQZqIMKMnU,,,,,41.486602783203125,-81.80370330810546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,give them my pogoberries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,60,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,no,no,I cannot say,internalist_biological
+2020-10-12 10:57:49,2020-10-12 11:00:46,IP Address,104.156.127.125,100,177,True,2020-10-12 11:00:46,R_3PBPTHWdudz4qWx,,,,,37.19110107421875,-82.65129852294921875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Give them digestive aids,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,White/European American,,Some college,High school/GED,No problems.,,Tests as a barometer for children and learning abilities.,internalist_biological
+2020-10-12 11:11:47,2020-10-12 11:16:07,IP Address,69.23.235.1,100,260,True,2020-10-12 11:16:07,R_3DolDferEb9w5cM,,,,,38.21319580078125,-84.545501708984375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Make it okay for them to eat them,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Female,,White/European American,,Some college,High school/GED,No,No,I'm not sure,internalist_cultural
+2020-10-12 11:13:19,2020-10-12 11:17:05,IP Address,108.41.104.169,100,225,True,2020-10-12 11:17:05,R_2D2LVffqJEdzhij,,,,,40.62860107421875,-73.93900299072265625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,I would make sure there are enough okinberries for all the Zarpies and the Vawns.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,59,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,"No, everything went well.","No, I think it works well the way it is now.",Not sure... It might be about how people understand a problem and identify potential solutions.,structural
+2020-10-12 11:14:22,2020-10-12 11:17:20,IP Address,174.215.144.235,100,177,True,2020-10-12 11:17:20,R_2SwsBXRJzneCdwH,,,,,33.7223968505859375,-84.52050018310546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,A little bad,,They could make friends with the vawns,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,32,Female,,White/European American,,High school/GED,High school/GED,None,None,Learning new groups,structural
+2020-10-12 11:18:03,2020-10-12 11:21:22,IP Address,71.72.211.74,100,198,True,2020-10-12 11:21:22,R_3FIk3GZptmlEjjo,,,,,40.74200439453125,-81.1031036376953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I'm not sure,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,29,Female,,White/European American,,High school/GED,Less than high school,no,no,I'm not sure,internalist_biological
+2020-10-12 11:18:23,2020-10-12 11:24:06,IP Address,71.84.150.235,100,342,True,2020-10-12 11:24:06,R_1hSbRLUbl4Id1AS,,,,,32.887603759765625,-97.21320343017578125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,i would make a vaccine against the ill effects zarpies experience from eating okinberries,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_biological
+2020-10-12 11:14:27,2020-10-12 11:24:48,IP Address,162.210.195.172,100,621,True,2020-10-12 11:24:49,R_UG9zCrvvKGCg7bb,,,,,38.9033966064453125,-76.98819732666015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"I would probably make research on what could make the okinberries tatse like pogoberry, so that the Zarpies would be able to eat it ",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,45,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,Understanding individual cognitive process underlying language and social categorization,internalist_cultural
+2020-10-12 11:23:51,2020-10-12 11:27:03,IP Address,174.215.144.235,100,192,True,2020-10-12 11:27:03,R_2BxsVwRfQMpvdRC,,,,,33.7223968505859375,-84.52050018310546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,A little bad,,"They need to make friends with the vawns and ask if it's ok to eat okinberries. ",Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,32,Female,,White/European American,,High school/GED,High school/GED,None,None,None,internalist_cultural
+2020-10-12 11:24:05,2020-10-12 11:27:55,IP Address,173.23.142.169,100,229,True,2020-10-12 11:27:55,R_1H43vOieG4mHj8J,,,,,39.484893798828125,-88.1804962158203125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,Make sure they aren't allergic to them.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,52,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no problems,nothing I can think of,interpersonal relationships for children??,structural
+2020-10-12 11:22:48,2020-10-12 11:29:27,IP Address,47.16.153.114,100,399,True,2020-10-12 11:29:27,R_6hPfXjCspmBGOWt,,,,,40.882293701171875,-74.21520233154296875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,I would have the Zarpies travel to where the okinberries are to resupply their food stores.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,structural
+2020-10-12 11:32:09,2020-10-12 11:33:44,IP Address,73.253.75.176,100,95,True,2020-10-12 11:33:45,R_yIo0Z6XI9INnWmt,,,,,42.456695556640625,-71.37470245361328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would make a medication that allows them to eat okinberries without any ill effects.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,24,Female,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_biological
+2020-10-12 11:34:26,2020-10-12 11:37:38,IP Address,73.153.191.15,100,191,True,2020-10-12 11:37:38,R_sRMIV6bLCCPLq0h,,,,,39.712799072265625,-105.09529876708984375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,ship the okinberries to their part of the planet,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,59,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,n/a,n/a,I don't know.,structural
+2020-10-12 11:33:57,2020-10-12 11:37:42,IP Address,73.144.24.143,100,225,True,2020-10-12 11:37:42,R_1jjLxs5sfdEY5hb,,,,,42.4248046875,-83.195098876953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Create medicine that will cure the Zarpies if they get sick.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,Black/African American,,High school/GED,High school/GED,,,,internalist_biological
+2020-10-12 10:18:04,2020-10-12 11:37:45,IP Address,73.140.38.58,100,4780,True,2020-10-12 11:37:45,R_3QVlOs9tLqXGMud,,,,,47.6298065185546875,-117.398895263671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Not okay,"
+
+Vawns",For sure no,Okay,,A little good,I would eat the okinberries in front of the Zarpies to show them they are fine to eat.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,28,Male,,"White/European American,Asian/Asian American",,Some college,Less than high school,,,How we perceive taboos amongst cultures?,internalist_cultural
+2020-10-12 11:35:49,2020-10-12 11:39:43,IP Address,66.44.33.169,100,233,True,2020-10-12 11:39:43,R_3kdqfM19T739zaV,,,,,38.9391937255859375,-77.05840301513671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would dye the okinberries blue,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,,,,internalist_cultural
+2020-10-12 11:49:26,2020-10-12 11:51:42,IP Address,128.92.70.35,100,136,True,2020-10-12 11:51:42,R_d5TJ0mSejdFirVn,,,,,34.8950042724609375,-81.92040252685546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would change their biology such that they could eat them,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,32,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_biological
+2020-10-12 11:49:59,2020-10-12 11:52:22,IP Address,198.176.247.51,100,142,True,2020-10-12 11:52:22,R_YS3kNbHl5ZNrqvL,,,,,39.039703369140625,-94.593597412109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",Maybe yes,Okay,,A little good,trade with Vawns,Somewhat difficult,"Zarpies,Vawns",Okinberries,Learning about Zarpies and answering questions about them,26,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,no,no,,structural
+2020-10-12 12:00:38,2020-10-12 12:00:42,IP Address,205.178.67.43,100,3,True,2020-10-12 12:00:42,R_2c7bdbkM6wqXc8y,,,,,41.9031982421875,-87.63829803466796875,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 12:02:05,2020-10-12 12:05:51,IP Address,107.4.50.69,100,226,True,2020-10-12 12:05:52,R_9zsjQ3LRJx95btT,,,,,42.7686004638671875,-86.11699676513671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,"They will need to travel in order to obtain them, so I'd give them a means of transportation.",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,43,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,There were no issues.,I can't think of anything to improve it.,Trying to see if we think the creatures can eat different food than they are accustomed to.,structural
+2020-10-12 12:01:50,2020-10-12 12:06:02,IP Address,72.181.188.194,100,252,True,2020-10-12 12:06:03,R_so5W3fFpOWs2TO9,,,,,32.9149932861328125,-96.67510223388671875,anonymous,EN,I do consent to participate,No,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I will make them understand that berry is berry,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,43,Female,,White/European American,,"Master's (M.A., M.S.)",Some college,None,Everything looks good,How we relate or view narrations,internalist_cultural
+2020-10-12 12:08:03,2020-10-12 12:10:12,IP Address,169.231.120.167,100,129,True,2020-10-12 12:10:12,R_2TL7nTZaOjjcg53,,,,,34.421600341796875,-119.7068023681640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Economic trade,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,28,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_biological
+2020-10-12 09:39:02,2020-10-12 12:14:19,IP Address,191.101.170.27,100,9316,True,2020-10-12 12:14:19,R_28FIviSk2MP4YyN,,,,,29.80999755859375,-95.56079864501953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,"Very, very good",Buy okinberries from varps,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Male,,Black/African American,,"Bachelor's (B.A., B.S.)",Some college,No.,No.,Comprehension,structural
+2020-10-12 12:18:02,2020-10-12 12:20:05,IP Address,71.195.197.213,100,123,True,2020-10-12 12:20:05,R_24Iqnj1LMakT71S,,,,,41.086395263671875,-112.04509735107421875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,tell them berries aren't lucky or unlucky.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,21,Male,,White/European American,,High school/GED,Some college,,,,internalist_cultural
+2020-10-12 12:22:48,2020-10-12 12:26:12,IP Address,216.254.241.72,100,204,True,2020-10-12 12:26:12,R_RJoRaSpsfasIOAh,,,,,43.5229034423828125,-96.78600311279296875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,A little good,Make then grow where they live.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,27,Female,,White/European American,,High school/GED,Some college,No.,I wasn't sure if it was implied the berries could be bad for the opposite alien.,"How children answer questions of what's okay or possible or not. ",structural
+2020-10-12 12:42:13,2020-10-12 12:45:05,IP Address,107.77.199.23,100,171,True,2020-10-12 12:45:05,R_1mIQ15WEFINi504,,,,,32.937896728515625,-96.83840179443359375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,some sort of medicine that would make it to where they can eat the okinberries,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_biological
+2020-10-12 12:54:11,2020-10-12 12:57:08,IP Address,75.177.104.109,100,177,True,2020-10-12 12:57:08,R_6stcMgDby0afk89,,,,,36.5001983642578125,-80.616302490234375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,make them taste different to them,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Female,,White/European American,,"Master's (M.A., M.S.)",High school/GED,no,it was good,no idea,internalist_cultural
+2020-10-12 13:07:27,2020-10-12 13:12:03,IP Address,74.131.64.193,100,276,True,2020-10-12 13:12:03,R_1Q47i2Rj87zCEzy,,,,,38.30780029296875,-85.73590087890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would wave my magic wand and turn okinberries into something that Zarpies could eat.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,57,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No,No,Right and wrong,internalist_biological
+2020-10-12 13:19:04,2020-10-12 13:25:27,IP Address,68.96.201.216,100,382,True,2020-10-12 13:25:27,R_1hGTZUm1kF77D2b,,,,,36.128997802734375,-115.27649688720703125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,make it fit to eat,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,35,Male,,White/European American,,"Bachelor's (B.A., B.S.)","Bachelor's (B.A., B.S.)",,,,structural
+2020-10-12 13:27:33,2020-10-12 13:30:19,IP Address,99.110.169.64,100,165,True,2020-10-12 13:30:19,R_2zezCPApu6cx3kx,,,,,39.9508056640625,-82.93289947509765625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Tell them it's okay to eat okinberries,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,24,Male,,Black/African American,,Some college,High school/GED,,,,internalist_cultural
+2020-10-12 13:27:14,2020-10-12 13:31:50,IP Address,173.187.5.173,100,275,True,2020-10-12 13:31:50,R_2BqUJRx3lnVkqx9,,,,,35.1150054931640625,-80.7061004638671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Perhaps liquefy them to see if they wouldn't get sick then?,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,45,Male,,White/European American,,Some college,Some college,Nothing was confusing.,I'm not sure...I found that question about the berries more difficult than anticipated though.  I was unsure if I had magic or God-like powers...or if my answer should be more based in reality.,Evaluating children's creativity?,internalist_biological
+2020-10-12 13:36:52,2020-10-12 13:42:03,IP Address,73.248.230.98,100,311,True,2020-10-12 13:42:03,R_2YsKmmlevVoin1C,,,,,40.5554962158203125,-74.28549957275390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,I would plant okinberries where the Zarpies live.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,White/European American,,Some college,High school/GED,It wasn't confusing.,Nothing I can think of.,Determining what is considered okay or not okay.,structural
+2020-10-12 13:49:20,2020-10-12 13:52:21,IP Address,173.91.109.51,100,180,True,2020-10-12 13:52:21,R_3QQrdEMjA0JibML,,,,,41.429595947265625,-82.2046966552734375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,"Make them feel ok after they eat okinberries. ",Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,36,Male,,White/European American,,Some college,High school/GED,,,,internalist_biological
+2020-10-12 13:52:12,2020-10-12 13:58:27,IP Address,75.117.205.167,100,374,True,2020-10-12 13:58:27,R_8B8HWZgIIV3P9sd,,,,,37.2982940673828125,-83.19120025634765625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,Make them grow on their side of the planet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,29,Female,,White/European American,,High school/GED,High school/GED,,,,structural
+2020-10-12 13:54:28,2020-10-12 13:59:20,IP Address,174.255.64.20,100,291,True,2020-10-12 13:59:20,R_2TBqIWQF1OFqpb2,,,,,42.356201171875,-71.06310272216796875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",For sure yes,Not okay,Pretty bad,,It will be lucky,Somewhat difficult,"Zarpies,Vawns,Hibbles","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,35,Male,,White/European American,,Some college,High school/GED,No,No,Unsure,internalist_cultural
+2020-10-12 13:39:34,2020-10-12 14:06:29,IP Address,50.25.69.85,100,1615,True,2020-10-12 14:06:30,R_2VkYwzgHByPVst2,,,,,37.718902587890625,-82.1930999755859375,anonymous,EN,I do consent to participate,Yes,Yes,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,Make a public service announcement that they are in a state of emergency and there is no choice but to eat okinberries until further notice.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,60,Female,,White/European American,,Some college,High school/GED,,,,internalist_cultural
+2020-10-12 14:05:22,2020-10-12 14:09:58,IP Address,99.21.146.37,100,275,True,2020-10-12 14:09:58,R_Wlcg4gaJGGPkUlH,,,,,38.5879058837890625,-121.405303955078125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would make them not allergic.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,53,Female,,"White/European American,Black/African American",,Some college,Some college,There were no problems.,I can't think of anything. The characters were so cute though.,I'm not sure except to see if simple language is understandable somehow.,internalist_biological
+2020-10-12 14:12:38,2020-10-12 14:14:21,IP Address,50.106.224.74,100,102,True,2020-10-12 14:14:21,R_1Cpehmrud0SAovv,,,,,40.46929931640625,-88.9423980712890625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,tell them they're not bad luck,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_cultural
+2020-10-12 14:18:49,2020-10-12 14:27:00,IP Address,99.75.53.174,100,490,True,2020-10-12 14:27:00,R_2rBl524SOSr0mLu,,,,,42.0220947265625,-88.170501708984375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,Offer money for okinberry seeds.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Male,,Click to write Choice 7,,Some college,High school/GED,,,,structural
+2020-10-12 14:24:20,2020-10-12 14:28:04,IP Address,24.73.29.116,100,224,True,2020-10-12 14:28:05,R_2SkHxNATbP0wQUV,,,,,28.32989501953125,-82.285003662109375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",For sure no,Not okay,"Very, very bad",,Maybe breed them with the other type of alien so that they can eat the okinberries.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Male,,Black/African American,,Some college,High school/GED,,,,internalist_biological
+2020-10-12 14:28:55,2020-10-12 14:31:32,IP Address,73.173.103.253,100,156,True,2020-10-12 14:31:32,R_12ydWu5qOROCEXy,,,,,39.21240234375,-76.87760162353515625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,Change the way that the Zarpies digestive system functions to enable them to eat okinberries.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,26,Male,,White/European American,,"Bachelor's (B.A., B.S.)","Bachelor's (B.A., B.S.)",,,,internalist_biological
+2020-10-12 14:27:08,2020-10-12 14:32:33,IP Address,64.145.93.154,100,325,True,2020-10-12 14:32:34,R_vpL5NXISRC8VMel,,,,,37.751007080078125,-97.82199859619140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,"i would paint the okinberries to the colors of pokoberries. ",Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_cultural
+2020-10-12 14:31:44,2020-10-12 14:33:28,IP Address,98.220.230.70,100,104,True,2020-10-12 14:33:29,R_23V886zGLzzCmxT,,,,,42.0487060546875,-87.8905029296875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,"Transport the okinberries to their planet. ",Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,25,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,structural
+2020-10-12 14:34:37,2020-10-12 14:34:41,IP Address,69.117.190.55,100,4,True,2020-10-12 14:34:41,R_PGyl5b7JL3Bphfz,,,,,40.924102783203125,-74.51399993896484375,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 14:33:02,2020-10-12 14:36:24,IP Address,50.83.232.150,100,201,True,2020-10-12 14:36:24,R_2Bs2pH8rH9RqbNG,,,,,36.8805999755859375,-88.35479736328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,A little good,convince the Zarpies that there is no such thing as bad luck,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,,,,internalist_cultural
+2020-10-12 14:32:25,2020-10-12 14:43:22,IP Address,67.85.86.64,100,657,True,2020-10-12 14:43:22,R_2AKDh3AbpItoJTY,,,,,40.854705810546875,-73.9217987060546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would process the Okinberries in a way that it won't make Zarpies ill.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,51,Male,,Latino/Latina,,Some college,Some college,Nothing was confusing.,,Perceptions of food choices.,internalist_biological
+2020-10-12 14:43:57,2020-10-12 14:50:30,IP Address,170.10.187.43,100,393,True,2020-10-12 14:50:30,R_Qm1XAB6zQ9CruW5,,,,,36.183502197265625,-94.17620086669921875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would alter the state of the okinberry so that it becomes safe for Zarples to eat.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Male,,Black/African American,,High school/GED,High school/GED,There were no problems experienced with the study.,"No, not in particular.",I'm not completely sure for certain.,internalist_biological
+2020-10-12 14:49:10,2020-10-12 14:51:49,IP Address,47.205.85.22,100,158,True,2020-10-12 14:51:49,R_ZCDsPSBnHGMQAiB,,,,,28.3022003173828125,-82.62640380859375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,A little good,Tell everyone that eating any kind of berry does not cause a change in luck.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,34,Male,,White/European American,,High school/GED,High school/GED,no,no,i am not sure,internalist_cultural
+2020-10-12 14:47:57,2020-10-12 14:52:16,IP Address,107.185.127.75,100,259,True,2020-10-12 14:52:17,R_2VpPCfEF4NoKZPe,,,,,33.967498779296875,-118.14640045166015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,The zarpies need to move to travel to the area of the planet where okinberries grow,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,23,Male,,Latino/Latina,,Some college,High school/GED,,,,structural
+2020-10-12 14:49:31,2020-10-12 14:56:50,IP Address,23.119.175.212,100,439,True,2020-10-12 14:56:50,R_2yeeW0rOojwjavO,,,,,29.673095703125,-95.585601806640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,I would tell them that eating okinberries does not bring bad luck.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,Latino/Latina,,High school/GED,High school/GED,,,,internalist_cultural
+2020-10-12 15:02:54,2020-10-12 15:05:14,IP Address,100.14.142.186,100,140,True,2020-10-12 15:05:14,R_1fcKnyaPTDMsRtM,,,,,39.158905029296875,-75.587799072265625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,Plant the berries on that side of the planet.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Male,,White/European American,,Some college,Some college,,,,structural
+2020-10-12 15:05:15,2020-10-12 15:07:03,IP Address,24.10.102.176,100,107,True,2020-10-12 15:07:03,R_2dv7bxwqfil67S4,,,,,38.468902587890625,-121.34400177001953125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,cook them,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,30,Female,,White/European American,,Some college,Some college,,,,internalist_biological
+2020-10-12 15:04:10,2020-10-12 15:08:27,IP Address,68.101.151.45,100,256,True,2020-10-12 15:08:27,R_2tbuSmBjLE2vnD9,,,,,32.9727935791015625,-117.03790283203125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,i would remove their superstition about the okinberries so they can eat them without worrying,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,37,Female,,White/European American,,High school/GED,Some college,no,i enjoyed as is,comprehension for kids,internalist_cultural
+2020-10-12 15:03:54,2020-10-12 15:08:55,IP Address,67.183.235.220,100,300,True,2020-10-12 15:08:56,R_3kzl8Zc6jHw345t,,,,,47.794097900390625,-122.3065948486328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"Change the okinberries so the Zarpies are able to eat them. ",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,47,Female,,White/European American,,Some college,Some college,"I didn't have any problems. ","I thought the survey was fine. I don't think it needs to be changed. ","How easy it was for you to learn about Zarpies and remember what they eat. ",internalist_biological
+2020-10-12 15:14:18,2020-10-12 15:14:33,IP Address,23.252.189.45,100,14,True,2020-10-12 15:14:33,R_3kzcEfdARq058CA,,,,,37.922698974609375,-83.2610015869140625,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 15:11:11,2020-10-12 15:20:37,IP Address,73.227.222.115,100,565,True,2020-10-12 15:20:37,R_BMx6rW9Q9ZSeGOt,,,,,41.2776031494140625,-72.81150054931640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,make them no longer believe it is bad luck to eat them.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,35,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,,,,internalist_cultural
+2020-10-12 15:16:24,2020-10-12 15:21:54,IP Address,47.224.50.72,100,330,True,2020-10-12 15:21:55,R_3GfbyoAQNlW72qt,,,,,45.4405059814453125,-84.79239654541015625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,"Very, very good",I would give them a supply of okinberries to get them through to next harvest.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,44,Male,,White/European American,,"Bachelor's (B.A., B.S.)",Some college,No issues.,It's fine as is.,It was about differences and choices.,structural
+2020-10-12 15:25:53,2020-10-12 15:28:21,IP Address,98.165.232.147,100,147,True,2020-10-12 15:28:21,R_3sic9uaca6XveRR,,,,,33.3123931884765625,-111.91950225830078125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Okay,,Pretty good,I would provide seeds so the Zarpies can farm okinberries.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,25,Female,,White/European American,,Some college,Some college,,,,structural
+2020-10-12 15:25:27,2020-10-12 15:30:14,IP Address,66.191.255.194,100,286,True,2020-10-12 15:30:14,R_3HZySalF5JJLMcE,,,,,36.549102783203125,-82.55840301513671875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Zarpies",For sure no,Not okay,"Very, very bad",,help figure out a way that they could eat okinberries without getting sick,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,38,Female,,Latino/Latina,,High school/GED,High school/GED,none,nothing,figuring out two aliens on a planet,internalist_biological
+2020-10-12 15:35:03,2020-10-12 15:40:38,IP Address,71.245.8.141,100,334,True,2020-10-12 15:40:38,R_3sncrlzb1iHM28A,,,,,40.797698974609375,-77.0467987060546875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,I would make them not get sick from them.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Female,,White/European American,,High school/GED,High school/GED,no,no,not sure,internalist_biological
+2020-10-12 15:33:11,2020-10-12 15:42:55,IP Address,70.188.28.167,100,583,True,2020-10-12 15:42:55,R_1DOrp5V9GrRnuh6,,,,,37.3029022216796875,-79.93219757080078125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,"Very, very good",I would make a crop of okinberries large enough to feed them all.,Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,56,Female,,White/European American,,Some college,High school/GED,No,It was cute,Students learning to make decisions based on multiple items.,internalist_cultural
+2020-10-12 16:23:35,2020-10-12 16:27:17,IP Address,75.40.24.179,100,221,True,2020-10-12 16:27:17,R_3KAQYyCoUNPbcno,,,,,32.560699462890625,-84.8572998046875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Okay,,"Very, very good",send okinberries to the Zarpies,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,66,Male,,White/European American,,"Master's (M.A., M.S.)",Some college,none,no,no idea,structural
+2020-10-12 16:51:14,2020-10-12 16:57:11,IP Address,72.217.117.112,100,357,True,2020-10-12 16:57:12,R_1daFZ8Rqs1gux99,,,,,32.1707000732421875,-110.97190093994140625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,A little bad,,Change their belief about okinberries,Somewhat difficult,Zarpies,Okinberries,Learning about Zarpies and answering questions about them,70,Female,,White/European American,,Some college,Some college,no,no,not sure don't know,internalist_cultural
+2020-10-12 17:15:14,2020-10-12 17:19:53,IP Address,66.215.22.182,100,278,True,2020-10-12 17:19:53,R_3HRKiTnUeSVdi8n,,,,,34.0915069580078125,-118.13069915771484375,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,"Establish hospitals on the planet so that Zarpies can receive treatment on their inevitable sickness. ",Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,31,Male,,Click to write Choice 8,,"Doctoral (Ph.D., J.D., M.D.)",High school/GED,No.,N/A,Evaluating ethics through the scope of children's books.,internalist_biological
+2020-10-12 18:42:36,2020-10-12 18:53:17,IP Address,99.26.145.157,100,640,True,2020-10-12 18:53:17,R_3j6uomHxTqvsJCT,,,,,33.907501220703125,-117.78659820556640625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Not okay,A little bad,,"I'd change the stomachs on the Zarpies, so that their stomachs can digest the okinberries, like the Vawns can.",Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Female,,White/European American,,Some college,Some college,"It stated, earlier in the study that this study was hoping for a child to read it, so the wording was geared towards a child. Does that mean you want a child to help do this survey? That part was a little unclear for me.",,To see how children would answer this story about aliens.,structural
+2020-10-12 19:02:49,2020-10-12 19:05:12,IP Address,73.169.1.218,100,142,True,2020-10-12 19:05:12,R_wRviZsF3GkIrI9H,,,,,39.612396240234375,-104.880401611328125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,I would change the coloring so they couldn't tell.,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,20,Male,,White/European American,,Some college,Some college,,,,internalist_cultural
+2020-10-12 21:15:47,2020-10-12 21:20:23,IP Address,72.181.194.47,100,275,True,2020-10-12 21:20:23,R_2D7iLeuAj88FXuE,,,,,32.8231048583984375,-96.966796875,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe no,Not okay,"Very, very bad",,i dont know,Somewhat easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,39,Female,,White/European American,,"Bachelor's (B.A., B.S.)",High school/GED,"no, its a good study",yes it can be more user friendly,a social experiment study,internalist_biological
+2020-10-12 21:27:39,2020-10-12 21:28:01,IP Address,72.229.168.172,100,21,True,2020-10-12 21:28:01,R_xlNFJU6eCxU1xJL,,,,,40.7259979248046875,-73.84799957275390625,anonymous,EN,I do NOT consent to participate,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-10-12 21:31:38,2020-10-12 21:37:37,IP Address,72.229.168.172,100,358,True,2020-10-12 21:37:37,R_2WNCN8qQIDKaZUA,,,,,40.7259979248046875,-73.84799957275390625,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,"Invade the other aliens and force them to share their okinberries ",Very difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,23,Female,,Black/African American,,"Bachelor's (B.A., B.S.)",High school/GED,nope,nope,"maybe to see peoples morality when it comes to making decisions . Because the questions prior mentioned it is wrong to steal , but the Zarpies dont steal or take the berries from the other aliens they will starve to death.",structural
+2020-10-12 21:38:38,2020-10-12 21:45:53,IP Address,73.219.249.59,100,434,True,2020-10-12 21:45:53,R_3LX8s4dxA8YRuXM,,,,,42.246307373046875,-70.99720001220703125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",Maybe yes,Okay,,Pretty good,I would make sure there is an abundant supply of okinberries for the Zarpies to eat.,Somewhat difficult,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,33,Male,,Click to write Choice 8,,"Bachelor's (B.A., B.S.)",Some college,There were no issues.,Everything went smoothly so I currently have no suggestions for improvement.,This study was possibly about a learning module.,structural
+2020-10-12 21:37:41,2020-10-12 22:41:01,IP Address,73.22.31.16,100,3800,True,2020-10-12 22:41:02,R_3mkSxzKuratRnvB,,,,,40.101593017578125,-88.28220367431640625,anonymous,EN,I do consent to participate,Yes,No,Okay,Okay,"
+
+Vawns",For sure no,Not okay,Pretty bad,,If you not this food ask there action,Very easy,Glerks,Pogoberries,Writing an essay about the political views of Zarpies,30,Male,,Black/African American,,"Bachelor's (B.A., B.S.)","Bachelor's (B.A., B.S.)",no problems,well,good,internalist_cultural
+2020-10-13 03:27:48,2020-10-13 03:30:23,IP Address,98.199.33.227,100,155,True,2020-10-13 03:30:23,R_2OMATI6w89azdqS,,,,,29.8636016845703125,-95.2053985595703125,anonymous,EN,I do consent to participate,Yes,No,Not okay,Okay,"
+
+Vawns",For sure no,Not okay,"Very, very bad",,Mix them with something so they can eat it.,Very easy,"Zarpies,Vawns","Pogoberries,Okinberries",Learning about Zarpies and answering questions about them,24,Male,,Click to write Choice 7,,Some college,Some college,No.,No.,Seeing how the story was to us and see if we thought kids could understand.,internalist_biological
