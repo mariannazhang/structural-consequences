@@ -21,24 +21,11 @@ affiliation:
     institution   : "Stanford University"
 
 authornote: |
-Department of Psychology, Stanford University
-
-Enter author note here.
+Department of Psychology, Stanford University. Thanks to Aarthi Popat for coding the intervention open-ended responses in study one.
 
 abstract: |
-One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
 
-Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-
-One sentence clearly stating the **general problem** being addressed by  this particular study.
-
-One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-
-Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-
-One or two sentences to put the results into a more **general context**.
-
-Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+We notice that certain categories are more likely than other categories to exhibit particular properties. For instance, relative to other groups in the US, Black people are disproportionately infected by COVID-19, and disproportionately incarcerated. What do we make of such statistical patterns? Observing such group disparities might lead us to wonder "why?" and seek out causal structure. We can generate a loose taxonomy of these potential causal structures by the type of cause they primarily cite. For instance, a structural representation might consider "the cause" of a property to be a cause that is external to the category yet acts on members of the category. Why might a structural representation be different from other representations, and why would we care? Using data from adults and children, I suggest that a structural representation (as opposed to other representations) leads to importantly different beliefs about normativity (what should be the case), the possibility of change (would it be possible for the case to be otherwise), and targets of intervention (if we wanted the case to be otherwise, what should we change). 
 
 <!-- https://tinyurl.com/ybremelq -->
 
@@ -70,7 +57,10 @@ library(effectsize) # effect sizes for power analysis
 library(pwr)        # power analysis
 library(BRRR)       # notify when done
 
-library(multcomp)   # multiple comparisons
+library(psych)      # cohen's kappa for inter-rater reliability
+
+library(multcomp)   # multiple pairwise comparisons
+library(emmeans)    # multiple pairwise comparisons
 library(brglm)      # logistic regression with Firth bias-reduction (when dealing with quasi-complete separation)
 library(brms)       # Bayesian mixed effects model
 library(tidybayes)  # Bayes factor
@@ -86,7 +76,7 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-```{r vis-theme}
+```{r vis-theme, include = FALSE}
 # Set visualization theme
 theme_set(
   ggthemes::theme_few() +
@@ -118,8 +108,6 @@ This project's [repository](https://github.com/mariannazhang/structural-conseque
 
 
 ```{r power-analysis-bootstrap-pairwise, eval = FALSE, warnings = FALSE}
-## Power analysis from pilot data
-
 # Import pilot 1 data, with measure adjustments since pilot 1
 data.pilot <- data
 data.pilot.intervention <- data.intervention
@@ -249,7 +237,7 @@ Note that the true sample size will be slightly lower due to anticipated planned
 ## Participants
 
 ```{r import-data}
-# Import pilot data for analysis
+# Import data for analysis
 data <- read_csv(here("data", "structural-consequences_data_study1_coded.csv"))
 ```
 
@@ -266,16 +254,21 @@ data <- data %>%
 
 # Coalesce redundant columns
 data <- data %>% 
-  mutate(normativity = coalesce(normativity_notOkay, normativity_okay),
+  mutate(possibility_change_fc = possibility_change,
+         possibility_change = coalesce(possibility_change_y, possibility_change_n),
+         normativity = coalesce(normativity_notOkay, normativity_okay),
          switched_context = coalesce(switched_context_1, switched_context_2))
 
 # Keep columns we care about
 data <- data %>% 
   select(participant, 
          condition, 
-         calibrate_poss_1:normativity_fc,
-         normativity,
+         calibrate_poss_1:calibrate_norm_2,
+         check_group_berry,
+         possibility_change_fc, possibility_change,
+         normativity_fc, normativity,
          switched_context_fc, switched_context,
+         intervention_coded_Aarthi, intervention_coded_Marianna,
          intervention_coded:ses
   ) 
 
@@ -287,13 +280,14 @@ data$check_group_berry <- data$check_group_berry %>%
 ```
 
 ```{r exclude}
-# Record exclusions
+# Record exclusions (participants may be counted twice)
 excl <- data %>% 
   summarize(check_group_berry = sum(check_group_berry != "Vawns"),
             check_group = sum(check_group != "Zarpies,Vawns"),
             check_berry = sum(check_berry != "Pogoberries,Okinberries"), 
             check_task = sum(check_task != "Learning about Zarpies and answering questions about them"),
-            check_normativity = sum(check_task != "Should not"))
+            check_normativity = sum(check_task != "Should not"),
+            total_collect = n())
 
 # Exclude participants and remove exclusion columns
 data <- data %>%
@@ -304,7 +298,6 @@ data <- data %>%
            check_normativity == "Should not") %>% 
   select(-starts_with("check"))
 
-
 ```
 
 ```{r sample-size}
@@ -312,11 +305,19 @@ data <- data %>%
 n.adults <- data %>% 
   nrow()
 
+# Calculate exclusion rate
+excl <- excl %>% 
+  mutate(total_excl = total_collect - n.adults,
+         excl_rate = total_excl/total_collect)
+
 # Record number of participants in actual sample per condition
 n.adults.condition <- data %>% 
   group_by(condition) %>% 
   summarize(n = length(unique(participant)))
 ```
+We excluded `r excl$total_excl `participants (or `r excl$excl_rate` of all partiicpants) based on pre-planned exclusion criteria.
+
+After exclusions, we retained `r n.adults` participants: `r n.adults.condition$internalist_biological` in the internalist (biological) condition, `r n.adults.condition$internalist_cultural` in the internalist (cultural) condition, and `r n.adults.condition$structural` in the structural condition.
 
 ```{r dem}
 # Record demographics of actual sample
@@ -362,39 +363,26 @@ dem.ses <- data %>%
 
 ## Procedure
 
+
+For the target of intervention question, explanations will be coded by 2 coders blind to condition, using the following coding scheme: 
+
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses. 
 
 Participants were excluded for failing the attention checks.
 <!-- data cleaning rules, data exclusion rules, covariates, etc. Key analysis of interest. Can also pre-specify additional analyses you plan to do.-->
 
-For the target of intervention question, explanations will be coded into "Internal", "Structural", or "Other" by individuals blind to the research hypothesis. For the purposes of this pilot with adults, explanations will be coded by the experimenter without knowledge of each participant's condition. A fuller coding scheme will be developed before actual testing, but:
-
-- modify Zarpies biology (vaccine, potion, pill, medicine, build tolerance, cross-breed with another alien)
-- modify Zarpies beliefs/culture (tell them it's not bad luck, tell them it's good luck, change their thoughts)
-- modify okinberries themselves so they are safe to eat (change color, wash them, heat up, cook them, prepare them, remove part, mix with something else, sanitize)
-- acquire pogoberries
-- acquire okinberries (grow/plant, import, trade, ask Vawns to send, search planet, tell them where to find, share with Vawns, travel, visit Vawns, move to other side of planet, switch spots with Vawns)
-- I don't know
-- ambiguous (do a magic spell that allows them to eat okinberries, give seeds, ask someone for them, be friendly with others, make it to where the okinberries don't make the Zarpies sick, have it not be poisonous, Will harvest again and cultivate it, establish hospitals for Zarpies when they get sick)
-- other (Zarpies will try to eat okinberies, too far away)
-
-
-
-- "Internal" = explanations appealing to causes located inside of an individual category member (eg genes, mental states) or inside of the group as a whole (eg culture, shared knowledge)
-- "Structural" = explanations appealing to causes located external to the group that operate on the group as a whole (eg location)
-- "Other" = idiosyncratic, non-answers, or explanations that appeal to external factors that do not apply to the group as a whole 
 
 ```{r recode-tidy}
 # Keep columns we care about
 data <- data %>% 
   select(participant, 
          condition, 
-         possibility_change,
-         normativity_fc,
-         normativity,
-         intervention_coded,
-         intervention_diff) 
+         possibility_change_fc, possibility_change,
+         normativity_fc, normativity,
+         switched_context_fc, switched_context,
+         intervention_coded_Marianna, intervention_coded_Aarthi,
+         intervention_coded, intervention_diff) 
 
 # Recode dependent measures into numerical values
 data$possibility_change <- 
@@ -404,17 +392,21 @@ data$possibility_change <-
          "Maybe yes" = 3,
          "For sure yes" = 4)
 
-data$normativity_fc_coded <- 
-  recode(data$normativity_fc,
-         "Not okay" = 0,
-         "Okay" = 1)
+data$switched_context <- 
+  recode(data$switched_context,
+         "For sure pogoberries" = 1,
+         "Maybe pogoberries" = 2,
+         "Maybe okinberries" = 3,
+         "For sure okinberries" = 4)
 
 data$normativity <- 
   recode(data$normativity,
-         "Okay" = 1
-         "A little bad" = 2,
-         "Pretty bad" = 3,
-         "Very, very bad" = 4)
+         "Very, very good" = 1,
+         "Pretty good" = 2,
+         "A little good" = 3,
+         "A little bad" = 4,
+         "Pretty bad" = 5,
+         "Very, very bad" = 6)
 
 data$intervention_diff <- 
   recode(data$intervention_diff,
@@ -425,19 +417,31 @@ data$intervention_diff <-
 ```
 
 ```{r}
-# Calculate inter-rater reliability for intervention coding
-data %>% 
-  mutate(intervention_coded_same = (intervention_coded_1 == intervention_coded_2)) %>% 
-  summarize(intervention_percent_agreement = sum(intervention_coded_same)/n(intervention_coded_same))
+# Calculate inter-rater reliability for intervention coding: % agreement, and Cohen's kappa
+data <- data %>%  
+  mutate(intervention_coded_same = (intervention_coded_Aarthi == intervention_coded_Marianna))
 
-cohen.kappa(data %>% select(intervention_coded_1, intervention_coded_2))
+intervention_reliability <- data %>% 
+  summarize(percent_agreement =
+              sum(intervention_coded_same) / length(intervention_coded_same))
+
+intervention_reliability <- intervention_reliability %>% 
+  mutate(cohen_kappa = cohen.kappa(x = data %>% 
+                                     select(intervention_coded_Marianna,
+                                            intervention_coded_Aarthi) %>%
+                                     as.data.frame())$kappa)
+
+# Remove individual coder columns
+data <- data %>% 
+  select(-intervention_coded_Aarthi, -intervention_coded_Marianna)
 ```
+Inter-rater reliability on coding intervention responses was high (`r intervention_reliability$percent_agreement` agreement, `r intervention_reliability$cohen_kappa` Cohen's kappa).
 
 ```{r}
 # Dummy variables for target of intervention codes
 data.intervention <- data
 
-data.intervention$intervention_coded <- data_intervention$intervention_coded %>% 
+data.intervention$intervention_coded <- data.intervention$intervention_coded %>% 
   str_replace_all(" ", "_") %>% 
   str_replace_all("/", "_") %>% 
   str_replace_all("'", "") 
@@ -450,7 +454,11 @@ data.intervention <- data.intervention %>%
 ```{r}
 # Gather long data to tidy form, and rename
 data.tidy <- data %>% 
-  gather(measure, response, c("possibility_change", "normativity_fc", "normativity_fc_coded", "normativity", "intervention_coded", "intervention_diff"))
+  gather(measure, response, 
+         c("possibility_change_fc", "possibility_change", 
+           "normativity_fc", "normativity", 
+           "switched_context_fc", "switched_context",
+           "intervention_coded", "intervention_diff"))
 
 data.tidy$condition <- data.tidy$condition %>% 
   dplyr::recode("internalist_biological" = "Internalist (biological)",
@@ -458,17 +466,20 @@ data.tidy$condition <- data.tidy$condition %>%
          "structural" = "Structural")
 
 data.tidy$measure <- data.tidy$measure %>% 
-  factor(levels = c("possibility_change", "normativity_fc", "normativity_fc_coded", "normativity", "intervention_coded", "intervention_diff"))
+  factor(levels = c("possibility_change_fc", "possibility_change", 
+                    "normativity_fc", "normativity", 
+                    "switched_context_fc", "switched_context",
+                    "intervention_coded", "intervention_diff"))
 
 
 # Split out open-ended text responses into separate data tables
-data.intervention <- data.tidy %>% 
+data.tidy.intervention <- data.tidy %>% 
   filter(measure == "intervention_coded" | measure == "intervention_diff") %>% 
   spread(measure, response)
 data.tidy <- data.tidy %>% 
   filter(measure != "intervention_coded")
 
-data.intervention$intervention_coded <- data.intervention$intervention_coded %>% 
+data.tidy.intervention$intervention_coded <- data.tidy.intervention$intervention_coded %>% 
   factor(levels = c("modify Zarpies biology", 
                     "modify Zarpies beliefs/culture", 
                     "acquire okinberries",
@@ -477,18 +488,26 @@ data.intervention$intervention_coded <- data.intervention$intervention_coded %>%
                     "ambiguous",
                     "other",
                     "don't know"))
-data.intervention$intervention_diff <- data.intervention$intervention_diff %>% 
+data.tidy.intervention$intervention_diff <- data.tidy.intervention$intervention_diff %>% 
   as.numeric()
 
 
-data.tidy.normativity_fc <- data.tidy %>% 
-  filter(measure == "normativity_fc")
+data.tidy.fc <- data.tidy %>% 
+  filter(measure == "possibility_change_fc" | 
+           measure == "normativity_fc" | 
+           measure == "switched_context_fc")
 data.tidy <- data.tidy %>% 
-  filter(measure != "normativity_fc")
+  filter(measure != "possibility_change_fc" & 
+           measure != "normativity_fc" &
+           measure != "switched_context_fc")
 
-data.tidy.normativity_fc$response <- data.tidy.normativity_fc$response %>% 
+data.tidy.fc$response <- data.tidy.fc$response %>%
   factor(levels = c("Okay",
-                    "Not okay"))
+                    "Not okay",
+                    "Yes",
+                    "No",
+                    "Pogoberries",
+                    "Okinberries"))
 
 data.tidy$response <- data.tidy$response %>% 
   as.numeric()
@@ -511,7 +530,7 @@ summary_stats
 
 
 # make contingency table of intervention responses
-data_intervention_counts <- data_intervention %>% 
+data.intervention.counts <- data.intervention %>% 
   group_by(condition) %>% 
   summarize(modify_Zarpies_biology = sum(modify_Zarpies_biology),
             modify_Zarpies_beliefs_culture = sum(modify_Zarpies_beliefs_culture),
@@ -576,10 +595,36 @@ ggplot(data.tidy %>% filter(measure == "normativity"),
 ggsave("normativity.png", width = 8)
 ```
 
-### Target of intervention and difficulty of intervention
+### Switched context
+```{r}
+# Plot responses: switched context
+ggplot(data.tidy %>% filter(measure == "switched_context"), 
+       aes(x = condition, y = response)) +
+  ggtitle("Switched context") +
+  scale_y_continuous(name = "Prediction about member outside context",
+                     breaks = c(1, 2, 3, 4),
+                     labels = c("For sure pogoberries: 1", "Maybe pogoberries: 2", "Maybe okinberries: 3", "For sure okinberries: 4")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.075),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("switched_context.png", width = 8)
+```
+
+### Target of intervention
 ```{r}
 # Plot: target of intervention
-ggplot(data.intervention, 
+ggplot(data.tidy.intervention, 
        aes(x = condition, fill = intervention_coded)) +
   geom_bar(position = "fill") +
   guides(fill = guide_legend(title = NULL)) +
@@ -589,17 +634,25 @@ ggplot(data.intervention,
   ggtitle("Target of intervention") 
 ggsave("intervention.png", width = 10)
 
+ggplot(data.tidy.intervention, 
+       aes(x = condition, fill = intervention_coded)) +
+  geom_bar(position = "fill",
+           color = "black") +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "What would you do, so that \n Zarpies can eat okinberies?",
+                     labels = scales::percent) +
+  scale_fill_manual(values = intervention_colors) + 
+  ggtitle("Target of intervention: modify Zarpies biology") 
+ggsave("intervention_biology.png", width = 10)
+```
 
-
+### Difficulty of intervention
+```{r}
 # Plot: difficulty of intervention by condition
-ggplot(data.intervention, 
+ggplot(data.tidy.intervention, 
        aes(x = condition, y = intervention_diff, color = intervention_coded)) +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.1) +
-  # stat_summary(fun.data = "mean_cl_boot",
-  #              position = position_dodge(width = 0.8),
-  #              geom = "linerange",
-  #              size = 1) +
   stat_summary(fun = "mean",
                position = position_dodge(width = 0.8),
                geom = "point",
@@ -615,14 +668,10 @@ ggsave("intervention_diff_condition.png", width = 10)
 
 
 # Plot: difficulty of intervention by intervention type
-ggplot(data.intervention, 
+ggplot(data.tidy.intervention, 
        aes(x = intervention_coded, y = intervention_diff, color = condition)) +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.3) +
-  # stat_summary(fun.data = "mean_cl_boot",
-  #              position = position_dodge(width = 0.8),
-  #              geom = "linerange",
-  #              size = 1) +
   stat_summary(fun = "mean",
                position = position_dodge(width = 0.8),
                geom = "point",
@@ -655,6 +704,16 @@ possibility_change_lm %>%
   emmeans("condition") %>% 
   pairs(adjust = "fdr") %>% 
   summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "internalist_biological") %>% select(possibility_change),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "internalist_cultural") %>% select(possibility_change),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "structural") %>% select(possibility_change),
+       mu = mean(1:4))
 ```
 
 
@@ -664,7 +723,7 @@ possibility_change_brm <- brm(possibility_change ~ condition + intervention_diff
                               data = data,
                               file = "possibility_change_brm")
 possibility_change_brm %>% 
-  pp_check() # posterior predictive check looks weird because possibility_change is actually ordinal, not continuous?
+  pp_check() # posterior predictive check looks weird because measure is actually ordinal, not continuous?
 
 possibility_change_brm %>% 
   hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
@@ -692,6 +751,16 @@ normativity_lm %>%
   emmeans("condition") %>% 
   pairs(adjust = "fdr") %>% 
   summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "internalist_biological") %>% select(normativity),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "internalist_cultural") %>% select(normativity),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "structural") %>% select(normativity),
+       mu = mean(1:6))
 ```
 
 ```{r}
@@ -713,6 +782,55 @@ normativity_brm %>%
   hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
 ```
 
+
+### Switched context
+```{r target-analysis-switched-context}
+# Switched context: linear model, controlling for difficulty of intervention
+switched_context_lm <- lm(switched_context ~ condition + intervention_diff,
+                            data = data)
+
+# main effect of condition, controlling for intervention difficulty
+switched_context_lm %>% 
+  aov() %>% 
+  summary()
+
+# compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+switched_context_lm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "fdr") %>% 
+  summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "internalist_biological") %>% select(switched_context),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "internalist_cultural") %>% select(switched_context),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "structural") %>% select(switched_context),
+       mu = mean(1:4))
+```
+
+
+```{r}
+# Switched context: Bayesian linear model, controlling for difficulty of intervention
+switched_context_brm <- brm(switched_context ~ condition + intervention_diff,
+                              data = data,
+                              file = "switched_context_brm")
+switched_context_brm %>% 
+  pp_check() # posterior predictive check looks weird because measure is actually ordinal, not continuous?
+
+switched_context_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+switched_context_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural > 0") # Structural vs Internalist (cultural)
+
+switched_context_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+
 ### Target of intervention
 Analyze whether counts of coded responses are independent of condition, using Fisher's exact test (rather than chi-square because of small sample size).
 ```{r}
@@ -732,17 +850,17 @@ glm(modify_Zarpies_biology ~ condition + intervention_diff,
 If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
 
 ```{r intervention-modify-Zarpies-biology-brglm, warning=FALSE}
-modify_Zarpies_biology_brglm <- brglm(modify_Zarpies_biology ~ condition + intervention_diff,
+modify_Zarpies_biology_glm <- glm(modify_Zarpies_biology ~ condition + intervention_diff,
     family = "binomial",
     data = data.intervention)
 
 # ANOVA for main effect of condition, controlling for intervention difficulty? --> yes
-modify_Zarpies_biology_brglm %>%
+modify_Zarpies_biology_glm %>%
   aov() %>%
   summary()
 
 # simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted --> biological > cultural/structural
-modify_Zarpies_biology_brglm %>% 
+modify_Zarpies_biology_glm %>% 
   emmeans("condition") %>% 
   pairs(adjust = "FDR") %>% 
   summary()
@@ -883,7 +1001,7 @@ See above; Bayesian analyses are not the primary tests of the hypotheses but are
 ## Force choice vs two-step scales
 ```{r normativity-fc}
 # Plot: normativity (force choice)
-ggplot(data.tidy.normativity_fc, 
+ggplot(data.tidy.fc %>% filter(measure == "normativity_fc"), 
        aes(x = condition, fill = response)) +
   geom_bar(position = "fill") +
   geom_hline(yintercept = mean(c(0, 1)), linetype = "dashed") +
@@ -893,6 +1011,13 @@ ggplot(data.tidy.normativity_fc,
                      labels = scales::percent) +
   ggtitle("Normativity (forced choice)") 
 ggsave("normativity_fc.png", width = 8)
+
+
+# more than half in biological condition? 
+binom.test(x = data.tidy.fc %>% filter(condition == "internalist_biological" & measure == "normativity_fc") %>% count("Okay"),
+           n = data.tidy.fc %>% filter(condition == "internalist_biological" & measure == "normativity_fc" %>% length(),
+           p = 0.5, # compare against half
+           alternative = "two.sided")
 ```
 
 
