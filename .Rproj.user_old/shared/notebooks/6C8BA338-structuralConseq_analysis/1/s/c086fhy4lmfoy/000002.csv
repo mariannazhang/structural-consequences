@@ -1,0 +1,10 @@
+"0","# Record number of participants in actual sample after exclusions"
+"0","n.adults <- data %>% "
+"0","  nrow()"
+"0",""
+"0","# Record number of participants in actual sample per condition"
+"0","n.adults.condition <- data %>% "
+"0","  group_by(condition) %>% "
+"0","  summarize(n = length(unique(participant)))"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"

@@ -1,0 +1,5 @@
+"0","# Visualize predictions"
+"0","ggplot(predicted_means, aes(x = construal, y = response)) +"
+"0","  geom_point(size = 4) + "
+"0","  facet_wrap(vars(measure)) + "
+"0","  scale_y_continuous(limits = c(0, 1))"

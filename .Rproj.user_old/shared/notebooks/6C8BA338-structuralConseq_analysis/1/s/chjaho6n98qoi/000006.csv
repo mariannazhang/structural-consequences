@@ -1,0 +1,9 @@
+"0","# Import pilot data for analysis"
+"0","data <- read_csv(here(""data"", ""structural-consequences_data_pilot1_coded.csv""))"
+"2","Parsed with column specification:
+cols(
+  .default = col_character()
+)
+"
+"2","See spec(...) for full column specifications.
+"
