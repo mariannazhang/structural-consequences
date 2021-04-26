@@ -543,19 +543,19 @@ contrasts <- lm(possibility_change ~ condition + intervention_diff,
   emmeans("condition") %>% 
   pairs() %>% 
   summary() %>% 
-  pull(contrast) # condition comparisons
+  pull(contrast) # get the names of each pairwise condition comparison
 
 # set up simulation grid
 power <- crossing(
   alpha = alpha,
-  sample_size = c(20, 22, 25, 30, 35), 
-  simulation = rep(1:simulations, 5) # 1000 simulations per each of 5 possible ns
+  sample_size = c(20, 22, 25, 30, 35), # test these sample sizes
+  simulation = rep(1:simulations, 5) # 1000 simulations per each of 5 tested sample sizes
 )
 
 
-# create a function to sample from pilot data and run analyses on the resample
+# create a function to sample individual participants from pilot data and run analyses on the resample
 bootstrap_analysis <- function(sample_size, alpha = 0.05, simulation = NULL){
-  # resample sample_size # of participants from pilot data (bootstrap)
+  # resample sample_size number of participants from pilot data, with replacement
   resample <- bind_rows(data_pilot %>% 
                           filter(condition == "biological") %>% 
                           slice_sample(n = sample_size, replace = TRUE),
@@ -568,7 +568,7 @@ bootstrap_analysis <- function(sample_size, alpha = 0.05, simulation = NULL){
     mutate(observation = row_number())
   
   
-  # dummy columns for target of intervention responses
+  # set up dummy columns for target of intervention responses
   resample <- resample %>% 
     mutate(
     # Cleaning
@@ -585,7 +585,7 @@ bootstrap_analysis <- function(sample_size, alpha = 0.05, simulation = NULL){
     spread(intervention_coded, counts, fill = 0)
   
   
-  # run analysis (brglm in case separation in logistic regression), pull p-values
+  # run analyses on each measure, pull p-values from each analysis
   results <- tibble(
     contrast = contrasts,
     possibility_change = lm(possibility_change ~ condition + intervention_diff, 
@@ -638,7 +638,8 @@ power_exp <- power %>%
   unnest()
 
 
-# calculate the proportion with which the H0 would be rejected (= power), under the different sample sizes specified
+# calculate the proportion with which the H0 would be rejected (= power), under the different sample sizes specified. 
+# we want to find a sample size that gives us at least 80% power on smallest contrast of interest
 power_results <- power_exp %>% 
   group_by(sample_size, contrast) %>%
   summarize(possibility_change = sum(possibility_change < .05) / n(),
@@ -648,7 +649,7 @@ power_results <- power_exp %>%
             modify_Zarpies_beliefs_culture = sum(modify_Zarpies_beliefs_culture < .05) / n(),
             modify_environment = sum(modify_environment < .05) / n())
 power_results
-write.csv(power_results, file = "power_results.csv")
+write.csv(power_results, file = "power_results.csv") # output to .csv file
 
 skrrrahh(26) # notify when done
 

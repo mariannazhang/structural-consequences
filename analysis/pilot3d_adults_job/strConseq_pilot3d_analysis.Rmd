@@ -1,0 +1,782 @@
+---
+title             : "Consequences of a structural construal for normativity, possibility of change, intervention"
+shorttitle        : "Structural consequences"
+
+author: 
+  - name          : "Marianna Y. Zhang"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Building 420, 450 Jane Stanford Way, Stanford, CA 94305"
+    email         : "marianna.zhang@stanford.edu"
+
+author: 
+  - name          : "Ellen M. Markman"
+    affiliation   : "1"
+    corresponding : no
+    address       : "Building 420, 450 Jane Stanford Way, Stanford, CA 94305"
+    email         : "markman@stanford.edu"
+
+affiliation:
+  - id            : "1"
+    institution   : "Stanford University"
+
+authornote: |
+Department of Psychology, Stanford University. Thanks to Aarthi Popat for coding the intervention open-ended responses in study one.
+
+abstract: |
+
+We notice that certain categories are more likely than other categories to exhibit particular properties. For instance, relative to other groups in the US, Black people are disproportionately infected by COVID-19, and disproportionately incarcerated. What do we make of such statistical patterns? Observing such group disparities might lead us to wonder "why?" and seek out causal structure. We can generate a loose taxonomy of these potential causal structures by the type of cause they primarily cite. For instance, a structural representation might consider "the cause" of a property to be a cause that is external to the category yet acts on members of the category. Why might a structural representation be different from other representations, and why would we care? Using data from adults and children, I suggest that a structural representation (as opposed to other representations) leads to importantly different beliefs about normativity (what should be the case), the possibility of change (would it be possible for the case to be otherwise), and targets of intervention (if we wanted the case to be otherwise, what should we change). 
+
+<!-- https://tinyurl.com/ybremelq -->
+
+keywords          : "structural thinking, categories, explanation, normativity, possibility of change"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa7"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+require("knitr")
+#library("papaja")  # not available for R 4.0
+library(here)       # setting directory
+
+library(effsize)    # effect sizes for power analysis
+library(effectsize) # effect sizes for power analysis
+library(pwr)        # power analysis
+library(BRRR)       # notify when done
+
+library(psych)      # cohen's kappa for inter-rater reliability
+
+library(MASS, exclude = "select")
+library(multcomp)   # multiple pairwise comparisons
+library(emmeans)    # multiple pairwise comparisons
+library(brglm)      # logistic regression with Firth bias-reduction (when dealing with quasi-complete separation)
+library(brms)       # Bayesian mixed effects model
+library(tidybayes)  # Bayes factor
+library(corrplot)   # correlation plots
+
+library(tidyverse)  # tidying and wrangling data, visualizations
+library(ggthemes)   # visualization themes for ggplot2
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+```{r vis-theme, include = FALSE}
+# Set visualization theme
+theme_set(
+  ggthemes::theme_few() +
+    theme(text = element_text(size = 16), # large text size for presentation figures
+          axis.ticks.x = element_blank()) # remove x-axis ticks
+)
+
+condition_colors = c("biological" = "#49808C",
+                     "cultural" = "#F2BF80",
+                     "structural" = "#D9695F")
+```
+
+
+# Methods
+Methods description here
+
+This project's [repository](https://github.com/mariannazhang/structural-consequences) and [preregistration]() can be found online.
+
+
+
+## Participants
+
+```{r import-data}
+# Import data for analysis
+data_raw <- read_csv(here("data", "strConseq_data_pilot3d_coded.csv"))
+```
+
+```{r clean-data}
+data <- data_raw %>%
+  # Filter out those who didn't consent
+  filter(consent == "I do consent to participate") %>% 
+  
+  # Add participant ID, coalesce redundant columns
+  mutate(participant = row_number(),
+         acceptability_fc = acceptability,
+         acceptability = coalesce(acceptability_notOk, acceptability_ok)) %>% 
+  
+  # Keep columns we care about
+  select(participant, 
+         condition, 
+         starts_with("check"),
+         pref_predict,
+         acceptability_fc, acceptability,
+         diff,
+         switched_context,
+         expl_rate_1, expl_rate_2, expl_rate_3,
+         intervention_coded, intervention_diff,
+         age:ses) %>% 
+  
+  # Renaming columns
+  rename(expl_pref = expl_rate_1,
+         expl_bestSuited = expl_rate_2,
+         expl_constraint = expl_rate_3) %>% 
+  
+  # Recoding and cleaning
+  mutate(condition = condition %>% 
+           factor(levels = c("biological_pos",
+                             "biological_neg",
+                             "cultural_pos",
+                             "cultural_neg",
+                             "structural")),
+         switched_context = switched_context %>% str_replace_all("\n", ""),
+         pref_predict = pref_predict %>% recode("For sure no" = 1,
+                                                "Likely no" = 2,
+                                                "Likely yes" = 3,
+                                                "For sure yes" = 4),
+         acceptability = acceptability %>% recode("Very, very bad" = 1,
+                                                  "Pretty bad" = 2,
+                                                  "A little bad" = 3,
+                                                  "A little good" = 4,
+                                                  "Pretty good" = 5,
+                                                  "Very, very good" = 6),
+         diff = diff %>% recode("Very similar" = 1,
+                                "Somewhat similar" = 2,
+                                "Equally similar and different" = 3,
+                                "Somewhat different" = 4,
+                                "Very different" = 5),
+         switched_context = switched_context %>% recode("For sure aquafruit farmer" = 1,
+                                                        "Likely aquafruit farmer" = 2,
+                                                        "Likely different job" = 3,
+                                                        "For sure different job" = 4),
+         expl_pref = expl_pref %>% recode("Not at all satisfying" = 1,
+                                              "Slightly satisfying" = 2,
+                                              "Somewhat satisfying" = 3,
+                                              "Very satisfying" = 4,
+                                              "Extremely satisfying" = 5),
+         expl_bestSuited = expl_bestSuited %>% recode("Not at all satisfying" = 1,
+                                              "Slightly satisfying" = 2,
+                                              "Somewhat satisfying" = 3,
+                                              "Very satisfying" = 4,
+                                              "Extremely satisfying" = 5),
+         expl_constraint = expl_constraint %>% recode("Not at all satisfying" = 1,
+                                              "Slightly satisfying" = 2,
+                                              "Somewhat satisfying" = 3,
+                                              "Very satisfying" = 4,
+                                              "Extremely satisfying" = 5),
+         intervention_diff = intervention_diff %>% recode("Very easy" = 1,
+                                                          "Somewhat easy" = 2,
+                                                          "Somewhat difficult" = 3,
+                                                          "Very difficult" = 4),
+         age = age %>% as.numeric(),
+         education = education %>% factor(
+           levels = c(
+             "Less than high school",
+             "High school/GED",
+             "Some college",
+             "Bachelor's (B.A., B.S.)",
+             "Master's (M.A., M.S.)",
+             "Doctoral (Ph.D., J.D., M.D.)",
+             "Prefer not to specify")),
+         ses = ses %>% factor(levels = c("Poor",
+                                         "Working class",
+                                         "Middle class",
+                                         "Affluent",
+                                         "Prefer not to specify")))
+```
+
+```{r exclude-sample-size}
+# Record exclusions (participants may be counted twice)
+sample <- data %>% 
+  summarize(check_group = sum(check_group != "Zarpies,Vawns"),
+            check_job = sum(check_job != "Aquafruit farmer,Distribution manager"), 
+            check_task = sum(check_task != "Learning about Zarpies and answering questions about them"),
+            n_collect = n())
+
+# Exclude participants and remove exclusion columns
+data <- data %>%
+  filter(check_group == "Zarpies,Vawns" &
+           check_job == "Aquafruit farmer,Distribution manager" &
+           check_task == "Learning about Zarpies and answering questions about them") %>% 
+  select(-starts_with("check"))
+
+# Record number of participants in actual sample after exclusions, exclusion rate
+sample <- sample %>%  
+  mutate(n = nrow(data),
+         n_excl = n_collect - n,
+         excl_rate = n_excl/n_collect)
+
+# Record number of participants in actual sample per condition
+sample_condition <- data %>% 
+  group_by(condition) %>% 
+  summarize(n = length(unique(participant)))
+```
+We excluded `r sample$n_excl `participants (or `r sample$excl_rate` of all participants) based on pre-planned exclusion criteria.
+
+After exclusions, we retained `r sample$n` participants: `r sample_condition$biological` in the biological condition, `r sample_condition$cultural` in the cultural condition, and `r sample_condition$structural` in the structural condition.
+
+```{r dem}
+# Record demographics of actual sample
+## Age
+dem_age <- data %>%
+  count(age)
+
+## Gender
+dem_gender <- data %>%
+  count(gender, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
+
+## Race
+dem_race <- data %>%
+  count(race, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
+
+## Education
+dem_education <- data %>%
+  count(education) %>% 
+  mutate(prop = n/sample$n)
+
+## Socio-economic status (SES) 
+dem_ses <- data %>%
+  count(ses) %>% 
+  mutate(prop = n/sample$n)
+
+```
+
+## Material
+
+## Procedure
+
+
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses. 
+
+Participants were excluded for failing the attention checks.
+<!-- data cleaning rules, data exclusion rules, covariates, etc. Key analysis of interest. Can also pre-specify additional analyses you plan to do.-->
+
+
+```{r}
+# Dummy variables for target of intervention codes
+data_intervention <- data %>% 
+  mutate(intervention_coded = intervention_coded %>% 
+           str_replace_all(" ", "_") %>%
+           str_replace_all("/", "_") %>%
+           str_replace_all("'", "")) %>% 
+  mutate(counts = 1) %>%
+  spread(intervention_coded, counts, fill = 0)
+```
+
+```{r}
+# Gather long data to tidy form, and rename
+data_tidy <- data %>% 
+  gather(measure, response, 
+         c(pref_predict,
+           acceptability_fc, acceptability,
+           diff, 
+           switched_context,
+           expl_pref, expl_bestSuited, expl_constraint,
+           intervention_coded, intervention_diff)) %>% 
+  mutate(measure = measure %>% factor(levels = c("pref_predict",
+                                                 "acceptability_fc", "acceptability",
+                                                 "diff", 
+                                                 "expl_pref", "expl_bestSuited", "expl_constraint",
+                                                 "intervention_coded", "intervention_diff")))
+
+# Split out open-ended text responses
+data_tidy_intervention <- data_tidy %>% 
+  filter(measure == "intervention_coded" | measure == "intervention_diff") %>% 
+  spread(measure, response) %>% 
+  mutate(intervention_coded = intervention_coded %>% 
+           factor(levels = c("target group biology",
+                             "provide job tools to group",
+                             "provide job training to group",
+                             "change group beliefs/culture",
+                             "create more jobs or access to jobs", 
+                             "change job wages or value",
+                             "change job conditions",
+                             "other",
+                             "ambiguous",
+                             "don't know")),
+         intervention_diff = intervention_diff %>% as.numeric())
+
+# Split out forced choice responses
+data_tidy_fc <- data_tidy %>% 
+  filter(measure == "acceptability_fc") %>% 
+  mutate(response = response %>% factor(levels = c("Okay",
+                                                   "Not okay")))
+
+# Remove those responses from data_tidy, and format responses as numeric
+data_tidy <- data_tidy %>% 
+  filter(measure != "intervention_coded" &
+           measure != "acceptability_fc") %>% 
+  mutate(response = response %>% as.numeric())
+```
+
+
+# Results
+## Tables
+```{r description}
+# calculate means and sds by condition
+summary_stats <- data %>% 
+  group_by(condition) %>% 
+  summarize(pref_predict_mean = mean(pref_predict, na.rm = TRUE),
+            pref_predict_sd = sd(pref_predict, na.rm = TRUE),
+            acceptability_mean = mean(acceptability, na.rm = TRUE),
+            acceptability_sd = sd(acceptability, na.rm = TRUE),
+            diff_mean = mean(diff, na.rm = TRUE),
+            diff_sd = sd(diff, na.rm = TRUE),
+            switched_context_mean = mean(switched_context, na.rm = TRUE),
+            switched_context_sd = sd(switched_context, na.rm = TRUE),
+            expl_pref_mean = mean(expl_pref, na.rm = TRUE),
+            expl_pref_sd = sd(expl_pref, na.rm = TRUE),
+            expl_bestSuited_mean = mean(expl_bestSuited, na.rm = TRUE),
+            expl_bestSuited_sd = sd(expl_bestSuited, na.rm = TRUE),
+            expl_constraint_mean = mean(expl_constraint, na.rm = TRUE),
+            expl_constraint_sd = sd(expl_constraint, na.rm = TRUE))
+summary_stats
+
+
+# make contingency table of intervention responses
+# fixme
+data_intervention_counts <- data_intervention %>% 
+  group_by(condition) %>% 
+  summarize(across(target_group_biology,
+                   provide_job_training_to_group,
+                   change_group_beliefs_culture,
+                   create_more_jobs_or_access_to_jobs,
+                   change_job_conditions,
+                   change_job_wages_or_value,
+                   other,
+                   ambiguous,
+                   dont_know), ~sum(.))
+
+```
+
+## Plots
+### Preference prediction
+```{r description-visualization}
+# Plot responses: preference prediction
+ggplot(data, aes(x = condition, y = pref_predict)) +
+  ggtitle("A group member who wants to work the other job") +
+  scale_y_continuous(name = "How likely is it that they actually do become a dist manager?",
+                     limits = c(1, 4),
+                     breaks = c(1, 2, 3, 4),
+                     labels = c("For sure no: 1", "Likely no: 2", "Likely yes: 3", "For sure yes: 4")) + 
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) 
+ggsave("pref_predict.png", width = 15)
+
+```
+
+### Acceptability
+```{r}
+# Plot responses: acceptability
+ggplot(data, aes(x = condition, y = acceptability)) +
+  ggtitle("Acceptability") +
+  scale_y_continuous(name = "attitudes towards current group patterns",
+                     breaks = c(1, 2, 3, 4, 5, 6),
+                     labels = c("very, very bad", "pretty bad", "a little bad", "a little good", "pretty good", "very, very good")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("acceptability.png", width = 15)
+
+```
+
+### Switched context
+```{r}
+# Plot responses: switched context
+ggplot(data, aes(x = condition, y = switched_context)) +
+  ggtitle("Switched context",
+          "born, raised, lives in a different island country") +
+  scale_y_continuous(name = "a group member outside context",
+                     limits = c(1, 4),
+                     breaks = c(1:4),
+                     labels = c("for sure aquafruit farmer", "probably aquafruit farmer", "probably diff job", "for sure diff job")) +
+  geom_hline(yintercept = mean(1:4), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("switched_context.png", width = 8)
+
+```
+
+### Group differences
+```{r group-diff}
+# Plot responses: group differences
+ggplot(data, aes(x = condition, y = diff)) +
+  ggtitle("Group differences") +
+  scale_y_continuous(name = "Zarpies and Vawns are...",
+                     limits = c(1, 5),
+                     breaks = c(1, 2, 3, 4, 5),
+                     labels = c("Very similar", "Somewhat similar", "Equally similar and different", "Somewhat different", "Very different")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("group_diff.png", width = 8)
+
+```
+### Explanation ratings
+```{r expl-pref}
+# Plot responses: explanation ratings: preference
+ggplot(data, aes(x = condition, y = expl_pref)) +
+  ggtitle("Rate: Zarpies prefer to work as aquafruit farmers.") +
+  scale_y_continuous(name = "How satisfying?",
+                     limits = c(1, 5),
+                     breaks = c(1:5),
+                     labels = c("Not at all", "Slightly", "Somewhat", "Very", "Extremely")) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("expl_pref.png", width = 8)
+
+```
+```{r expl-bestSuited}
+# Plot responses: explanation ratings: best suited
+ggplot(data, aes(x = condition, y = expl_bestSuited)) +
+  ggtitle("Rate: Zarpies are best-suited to working as aquafruit farmers.") +
+  scale_y_continuous(name = "How satisfying?",
+                     limits = c(1, 5),
+                     breaks = c(1:5),
+                     labels = c("Not at all", "Slightly", "Somewhat", "Very", "Extremely")) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("expl_bestSuited.png", width = 8)
+
+```
+
+```{r expl-constraint}
+# Plot responses: explanation ratings: constraint
+ggplot(data, aes(x = condition, y = expl_constraint)) +
+  ggtitle("Rate: Zarpies have few other options than to be aquafruit farmers.") +
+  scale_y_continuous(name = "How satisfying?",
+                     limits = c(1, 5),
+                     breaks = c(1:5),
+                     labels = c("Not at all", "Slightly", "Somewhat", "Very", "Extremely")) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("expl_constraint.png", width = 8)
+
+```
+
+### Target of intervention
+```{r target-of-intervention}
+# Plot: target of intervention
+ggplot(data_tidy_intervention, 
+       aes(x = condition, fill = intervention_coded)) +
+  ggtitle("Target of intervention") +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = intervention_colors) +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "What would you do, so that \n Zarpies can work as distribution managers?",
+                     labels = scales::percent,
+                     expand = c(0,0)) +
+  scale_x_discrete(expand = c(0,0))
+ggsave("intervention.png", width = 10)
+
+```
+
+### Difficulty of intervention
+```{r}
+# Plot: difficulty of intervention by condition
+ggplot(data_tidy_intervention, 
+       aes(x = condition, y = intervention_diff, color = intervention_coded)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.075),
+             size = 2, alpha = 0.1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "How difficult would it be?",
+                     labels = c("Very easy: 1", "Somewhat easy: 2", "Somewhat difficult: 3", "Very difficult: 4")) +
+  ggtitle("Difficulty of intervention by condition") 
+ggsave("intervention_diff_condition.png", width = 10)
+
+
+# Plot: difficulty of intervention by intervention type
+ggplot(data_tidy_intervention, 
+       aes(x = intervention_coded, y = intervention_diff, color = condition)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.075),
+             size = 2, alpha = 0.3) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) +
+  scale_color_manual(values = condition_colors) +
+  scale_x_discrete(name = "Target of intervention") +
+  scale_y_continuous(name = "How difficult would it be?",
+                     labels = c("Very easy: 1", "Somewhat easy: 2", "Somewhat difficult: 3", "Very difficult: 4")) +
+  ggtitle("Difficulty of intervention by target of intervention") 
+ggsave("intervention_diff.png", width = 18)
+```
+
+## Power analysis for later study
+
+```{r power-analysis-bootstrap-pairwise, eval = FALSE, warnings = FALSE}
+# Import pilot data, with measure adjustments since pilot
+data_pilot <- data %>% 
+  filter(condition == "biological_pos" | condition == "cultural_pos" | condition == "structural") %>% 
+  mutate(condition = condition %>% recode(
+    "biological_pos" = "biological",
+    "cultural_pos" = "cultural",
+    "structural" = "structural"))
+
+# set parameters
+alpha <- 0.05 # p-value criterion
+
+contrasts <- lm(acceptability ~ condition + intervention_diff, 
+                data = data_pilot) %>% 
+  emmeans("condition") %>% 
+  pairs() %>% 
+  summary() %>% 
+  pull(contrast) # condition comparisons
+
+simulations <- 300
+
+
+# set up simulation grid
+power <- crossing(
+  alpha = alpha,
+  sample_size = c(20, 30, 40, 50, 60), 
+  simulation = rep(1:simulations, 5) # __ simulations per each of 5 possible ns
+)
+
+
+# create a function to sample from pilot data and run analyses on the resample
+bootstrap_analysis <- function(sample_size, alpha = 0.05, simulation = NULL){
+  # resample sample_size # of participants from pilot data (bootstrap)
+  resample <- bind_rows(data_pilot %>% 
+                          filter(condition == "biological") %>% 
+                          slice_sample(n = sample_size, replace = TRUE),
+                        data_pilot %>% 
+                          filter(condition == "cultural") %>% 
+                          slice_sample(n = sample_size, replace = TRUE),
+                        data_pilot %>% 
+                          filter(condition == "structural") %>% 
+                          slice_sample(n = sample_size, replace = TRUE)) %>% 
+    mutate(observation = row_number())
+  
+  
+  # dummy columns for target of intervention responses
+  resample$intervention_coded <- resample$intervention_coded %>% 
+    str_replace_all(" ", "_") %>% 
+    str_replace_all("/", "_") 
+  
+  resample <- resample %>% 
+    mutate(counts = 1) %>%
+    spread(intervention_coded, counts, fill = 0)
+  
+  
+  # run analysis (brglm in case separation in logistic regression), pull p-values
+  results <- tibble(
+    contrast = contrasts,
+    acceptability = lm(acceptability ~ condition + intervention_diff, 
+                            data = resample) %>% 
+      emmeans("condition") %>% 
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    diff = lm(diff ~ condition + intervention_diff, 
+                     data = resample) %>% 
+      emmeans("condition") %>%
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    switched_context = lm(switched_context ~ condition + intervention_diff, 
+                     data = resample) %>% 
+      emmeans("condition") %>%
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    
+    expl_pref = lm(expl_pref ~ condition + intervention_diff, 
+                     data = resample) %>% 
+      emmeans("condition") %>%
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    
+    expl_bestSuited = lm(expl_bestSuited ~ condition + intervention_diff, 
+                     data = resample) %>% 
+      emmeans("condition") %>%
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    
+    expl_constraint = lm(expl_constraint ~ condition + intervention_diff, 
+                     data = resample) %>% 
+      emmeans("condition") %>%
+      pairs(adjust = "fdr") %>% 
+      summary() %>% 
+      pull(p.value),
+    
+    # provide_job_training_to_group = brglm(provide_job_training_to_group ~ condition + intervention_diff,
+    #                              family = "binomial",
+    #                              data = resample) %>% 
+    #   emmeans("condition") %>% 
+    #   pairs(adjust = "fdr") %>% 
+    #   summary() %>% 
+    #   pull(p.value),
+    # change_group_beliefs_culture = brglm(change_group_beliefs_culture ~ condition + intervention_diff,
+    #                              family = "binomial",
+    #                              data = resample) %>% 
+    #   emmeans("condition") %>% 
+    #   pairs(adjust = "fdr") %>% 
+    #   summary() %>% 
+    #   pull(p.value),
+    # create_more_jobs_or_access_to_jobs = brglm(create_more_jobs_or_access_to_jobs ~ condition + intervention_diff,
+    #                              family = "binomial",
+    #                              data = resample) %>% 
+    #   emmeans("condition") %>% 
+    #   pairs(adjust = "fdr") %>% 
+    #   summary() %>% 
+    #   pull(p.value),
+    # change_job_wages_or_value = brglm(change_job_wages_or_value ~ condition + intervention_diff,
+    #                              family = "binomial",
+    #                              data = resample) %>% 
+    #   emmeans("condition") %>% 
+    #   pairs(adjust = "fdr") %>% 
+    #   summary() %>% 
+    #   pull(p.value)
+    )
+  
+  return(results)
+}
+
+# run the bootstrap analysis function over the whole grid, using the different sample sizes specified
+power_exp <- power %>% 
+  mutate(results = pmap(power, bootstrap_analysis)) %>% 
+  unnest()
+
+
+# calculate the proportion with which the H0 would be rejected (= power), under the different sample sizes specified
+power_results <- power_exp %>% 
+  group_by(sample_size, contrast) %>%
+  summarize(acceptability = sum(acceptability < .05) / n(),
+            diff = sum(diff < .05) / n(),
+            switched_context = sum(switched_context < .05) / n(),
+            expl_pref = sum(expl_pref < .05) / n(),
+            expl_bestSuited = sum(expl_bestSuited < .05) / n(),
+            expl_constraint = sum(expl_constraint < .05) / n(),
+            # provide_job_training_to_group = sum(provide_job_training_to_group < .05) / n(),
+            # change_group_beliefs_culture = sum(change_group_beliefs_culture < .05) / n(),
+            # create_more_jobs_or_access_to_jobs = sum(create_more_jobs_or_access_to_jobs < .05) / n(),
+            # change_job_wages_or_value = sum(change_job_wages_or_value < .05) / n()
+            )
+power_results
+write.csv(power_results, file = "power_results.csv")
+
+skrrrahh(26) # notify when done
+
+```
+
+# Discussion
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup

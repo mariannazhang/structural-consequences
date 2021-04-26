@@ -59,6 +59,7 @@ library(BRRR)       # notify when done
 
 library(psych)      # cohen's kappa for inter-rater reliability
 
+library(MASS, exclude = "select")
 library(multcomp)   # multiple pairwise comparisons
 library(emmeans)    # multiple pairwise comparisons
 library(brglm)      # logistic regression with Firth bias-reduction (when dealing with quasi-complete separation)
@@ -89,9 +90,13 @@ condition_colors = c("biological" = "#49808C",
                      "structural" = "#D9695F")
 
 intervention_colors = c("modify Zarpies biology" = "#49808C",
+                        "change group biology" = "#49808C",
                         "modify Zarpies beliefs/culture" = "#F2BF80",
+                        "change group beliefs/culture" = "#F2BF80",
                         "acquire okinberries" = "#D9695F",
+                        "change environment \n (increase food access)" = "#D9695F",
                         "modify okinberries" = "#D9BAB7",
+                        "change the food" = "#D9BAB7",
                         "acquire pogoberries" = "#C3C7B6",
                         "other" = "#D9D9D9",
                         "ambiguous" = "#D9D9D9",
@@ -528,6 +533,31 @@ ggplot(data, aes(x = condition, y = normativity)) +
                fill = "black",
                size = 5)
 ggsave("normativity.png", width = 8)
+
+
+# Plot responses: normativity
+ggplot(data, aes(x = condition, y = normativity)) +
+  ggtitle("Structural representations lead to more positive attitudes \nabout group members who are different") +
+  theme(plot.title.position = "plot", 
+        plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(name = "a group member with a different diet",
+                     breaks = c(1, 2, 3, 4, 5, 6),
+                     labels = c("very, very good", "pretty good", "a little good", "a little bad", "pretty bad", "very, very bad")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("normativity_simple.png", height = 5, width = 8)
 ```
 
 ### Switched context
@@ -535,7 +565,6 @@ ggsave("normativity.png", width = 8)
 # Plot responses: switched context
 ggplot(data, aes(x = condition, y = switched_context)) +
   ggtitle("Switched context") +
-  theme(axis.ticks.x = element_blank()) +
   scale_y_continuous(name = "a group member outside context",
                      breaks = c(1, 2, 3, 4),
                      labels = c("for sure pogoberries", "maybe pogoberries", "maybe okinberries", "for sure okinberries")) +
@@ -557,10 +586,9 @@ ggsave("switched_context.png", width = 8)
 
 # Plot responses: switched context
 ggplot(data, aes(x = condition, y = switched_context)) +
-  ggtitle("Structural representations lead to \n reluctance to generalize beyond the structural context") +
+  ggtitle("Structural representations lead to reluctance to generalize \n beyond the group's structural context") +
   theme(plot.title.position = "plot", 
-        plot.title = element_text(hjust = 0.5),
-        axis.ticks.x = element_blank()) +
+        plot.title = element_text(hjust = 0.5)) +
   scale_y_continuous(name = "a group member outside context",
                      breaks = c(1, 2, 3, 4),
                      labels = c("for sure same diet", "maybe same diet", "maybe different diet", "for sure different diet")) +
@@ -578,7 +606,7 @@ ggplot(data, aes(x = condition, y = switched_context)) +
                color = "black",
                fill = "black",
                size = 5)
-ggsave("switched_context_SIGF.png", width = 8)
+ggsave("switched_context_simple.png", width = 8)
 ```
 
 ### Target of intervention
@@ -587,8 +615,7 @@ ggsave("switched_context_SIGF.png", width = 8)
 ggplot(data_tidy_intervention, 
        aes(x = condition, fill = intervention_coded)) +
   ggtitle("Target of intervention") +
-  theme(panel.border = element_blank(),
-        axis.ticks.x = element_blank(),
+  theme(plot.title.position = "plot", 
         plot.title = element_text(hjust = 0.5)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = intervention_colors) +
@@ -600,19 +627,27 @@ ggplot(data_tidy_intervention,
 ggsave("intervention.png", width = 10)
 
 ggplot(data_tidy_intervention, 
-       aes(x = condition, fill = intervention_coded)) +
-  ggtitle("Interventions that target \n resource availability, rather than the group") +
+       aes(x = condition, fill = intervention_coded %>% 
+             recode("modify Zarpies biology" = "change group biology",
+                    "modify Zarpies beliefs/culture" = "change group beliefs/culture",
+                    "acquire okinberries" = "change environment \n (increase food access)",
+                    "modify okinberries" = "change the food",
+                    "acquire pogoberries" = "other",
+                    "ambiguous" = "other",
+                    "other" = "other",
+                    "don't know" = "other"))) +
+  ggtitle("Structural representations suggest intervening on \nstructural factors (e.g. lack of food access), rather than the group") +
   theme(panel.border = element_blank(),
-        axis.ticks.x = element_blank(),
+        plot.title.position = "plot", 
         plot.title = element_text(hjust = 0.5)) +
   geom_bar(position = "fill") +
   scale_fill_manual(values = intervention_colors) +
   guides(fill = guide_legend(title = NULL)) +
-  scale_y_continuous(name = "What would you do, so that \n Zarpies can eat okinberries?",
+  scale_y_continuous(name = "What would you do to \nchange the group's diet?",
                      labels = scales::percent,
                      expand = c(0,0)) +
   scale_x_discrete(expand = c(0,0))
-ggsave("intervention_SIGF.png", width = 10)
+ggsave("intervention_simple.png", width = 10)
 
 ```
 
@@ -805,8 +840,8 @@ switched_context_brm %>%
 Analyze whether counts of coded responses are independent of condition, using Fisher's exact test (rather than chi-square because of small sample size).
 ```{r}
 # Fisher's exact test: are the proportion of responses different across the 3 conditions?
-fisher.test(data.intervention.counts %>% 
-              dplyr::select(-condition), workspace = 2e8)
+fisher.test(data_intervention_counts %>% select(-condition), 
+            workspace = 2e8)
 ```
 
 #### Modify Zarpies biology
@@ -814,7 +849,7 @@ fisher.test(data.intervention.counts %>%
 # Target of intervention: modify Zarpies biology: logistic regression, controlling for difficulty of intervention 
 glm(modify_Zarpies_biology ~ condition + intervention_diff,
     family = "binomial",
-    data = data.intervention) %>% 
+    data = data_intervention) %>% 
   summary()
 ```
 If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
