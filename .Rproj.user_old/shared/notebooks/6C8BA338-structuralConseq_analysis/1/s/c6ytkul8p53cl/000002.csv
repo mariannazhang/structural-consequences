@@ -1,5 +1,0 @@
-"0","# Set visualization theme"
-"0","theme_set("
-"0","  ggthemes::theme_few() +"
-"0","  theme(text = element_text(size = 16)) # large text size for presentation figures"
-"0",")"

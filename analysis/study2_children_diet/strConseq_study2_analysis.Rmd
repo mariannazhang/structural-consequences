@@ -53,6 +53,7 @@ require("knitr")
 library(readxl)     # import data from Excel
 library(here)       # setting directory
 
+library(MASS, exclude = "select")
 library(effsize)    # effect sizes for power analysis
 library(effectsize) # effect sizes for power analysis
 library(pwr)        # power analysis
@@ -103,23 +104,34 @@ intervention_codes_clean <- intervention_codes %>%
   str_replace_all("'", "")
 
 intervention_colors <- c(
-  "modify group biology" = "#49808C",
+  "modify group biology" = "#D9695F",
   "modify group beliefs/culture" = "#F2BF80",
-  "modify environment" = "#D9695F",
+  "modify environment" = "#49808C",
   "modify berry" = "#D9BAB7",
   "acquire original berry" = "#C3C7B6",
   "other" = "#D9D9D9",
   "ambiguous" = "#D9D9D9",
-  "don't know" = "#9E9E9E"
+  "don't know" = "#D9D9D9"
+  # "don't know" = "#9E9E9E"
+)
+
+
+intervention_colors_highlight <- c(
+  "modify group biology" = "#D9BAB7",
+  "modify group beliefs/culture" = "#D9BAB7",
+  "modify environment" = "#49808C",
+  "modify berry" = "#D9D9D9",
+  "acquire original berry" = "#D9D9D9",
+  "other" = "#D9D9D9",
+  "ambiguous" = "#D9D9D9",
+  "don't know" = "#D9D9D9"
+  # "don't know" = "#9E9E9E"
 )
 
 condition_colors <- c(
-  "biological" = "#49808C",
-  "Biological" = "#49808C",
+  "biological" = "#D9695F",
   "cultural" = "#F2BF80",
-  "Cultural" = "#F2BF80",
-  "structural" = "#D9695F",
-  "Structural" = "#D9695F"
+  "structural" = "#49808C"
 )
 ```
 
@@ -146,6 +158,7 @@ data <- data_raw %>%
 # Record exclusions (participants may be counted twice) & exclusion rate
 sample <- data %>% 
   summarize(atypical = sum(atypical != "no"),
+            out_of_age = sum(out_of_age != "no"),
             exp_error = sum(exp_error != "no"),
             interference = sum(interference != "no"), 
             insuff_lang = sum(insuff_lang != "no"),
@@ -178,12 +191,14 @@ dem_age <- data %>%
   count(age_cat)
 
 ## Gender
-dem_gender <- data %>%
-  count(gender)
+dem_gender <- data %>% 
+  count(gender, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
 
 ## Race
 dem_race <- data %>%
-  count(race)
+  count(race, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
 
 ```
 
@@ -206,17 +221,19 @@ Participants were excluded for failing the attention checks.
 data <- data %>% 
   mutate(possibility_change = possibility_change %>% 
            recode("for sure no" = 1,
+                  "no" = 1.5,
                   "maybe no" = 2,
                   "maybe yes" = 3,
+                  "yes" = 3.5,
                   "for sure yes" = 4),
          switched_context = 
-           if_else(data$cb_berry == "starRound", 
-                   (recode(data$switched_context,
+           if_else(cb_berry == "starRound", 
+                   (recode(switched_context,
                            "for sure starberries" = 1,
                            "maybe starberries" = 2,
                            "maybe roundberries" = 3,
                            "for sure roundberries" = 4)),
-                   (recode(data$switched_context,
+                   (recode(switched_context,
                            "for sure roundberries" = 1,
                            "maybe roundberries" = 2,
                            "maybe starberries" = 3,
@@ -239,7 +256,7 @@ data <- data %>%
                   "very hard" = 4))
 ```
 
-```{r}
+```{r interrater-reliability}
 # Calculate inter-rater reliability for intervention coding: % agreement, and Cohen's kappa
 data <- data %>%
   mutate(intervention_coded_same = (intervention_coded_1 == intervention_coded_2))
@@ -256,7 +273,7 @@ intervention_reliability <- intervention_reliability %>%
 
 # Remove individual coder columns
 data <- data %>%
-  select(-intervention_coded_1, -intervention_coded_2)
+  select(-intervention_coded_1, -intervention_coded_2, -intervention_coded_same)
 ```
 Inter-rater reliability on coding intervention responses was high (`r intervention_reliability$percent_agreement` agreement, `r intervention_reliability$cohen_kappa` Cohen's kappa).
 
@@ -288,11 +305,7 @@ data_tidy <- data %>%
            "switched_context_fc", "switched_context",
            "intervention_coded", "intervention_diff")) %>% 
   # cleaning
-  mutate(condition = condition %>% 
-           recode("internalist_biological" = "Internalist (biological)",
-                  "internalist_cultural" = "Internalist (cultural)",
-                  "structural" = "Structural"),
-         measure = measure %>% 
+  mutate(measure = measure %>% 
            factor(levels = c("possibility_change_fc", "possibility_change", 
                              "normativity_fc", "normativity", 
                              "switched_context_fc", "switched_context",
@@ -342,11 +355,11 @@ summary_stats
 # make contingency table of intervention responses
 data_intervention_counts <- data_intervention %>% 
   group_by(condition) %>% 
-  summarize(modify_Zarpies_biology = sum(modify_Zarpies_biology),
-            modify_Zarpies_beliefs_culture = sum(modify_Zarpies_beliefs_culture),
+  summarize(modify_group_biology = sum(modify_group_biology),
+            modify_group_beliefs_culture = sum(modify_group_beliefs_culture),
             modify_environment = sum(modify_environment),
             modify_berry = sum(modify_berry),
-            # acquire_original_berry = sum(acquire_original_berry),
+            acquire_original_berry = sum(acquire_original_berry),
             ambiguous = sum(ambiguous),
             dont_know = sum(dont_know))
 
@@ -358,11 +371,12 @@ data_intervention_counts <- data_intervention %>%
 # Plot responses: possibility of change
 ggplot(data, 
        aes(x = condition, y = possibility_change)) +
-  ggtitle("Possibility of change") +
-  scale_y_continuous(name = "Can Zarpies also eat roundberries?",
+  # ggtitle("Possibility of change") +
+  scale_y_continuous(name = "",
+                     # name = "Can Zarpies also eat roundberries?",
                      limits = c(0.9, 4.1),
                      breaks = c(1, 2, 3, 4),
-                     labels = c("For sure no: 1", "Maybe no: 2", "Maybe yes: 3", "For sure yes: 4")) + 
+                     labels = c("for sure no", "maybe no", "maybe yes", "for sure yes")) + 
   geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
   geom_point(position = position_jitter(width = 0.2, height = 0.05),
              size = 2, alpha = 0.1) + 
@@ -379,29 +393,29 @@ ggplot(data,
                size = 5) 
 ggsave("possibility_change.png", width = 7)
 
-# Plot responses: possibility of change by age
+
+# Blank
 ggplot(data, 
-       aes(x = age, y = possibility_change)) +
-  facet_wrap(vars(condition)) +
-  ggtitle("Possibility of change") +
-  scale_y_continuous(name = "Can Zarpies also eat roundberries?",
+       aes(x = condition, y = possibility_change)) +
+  # ggtitle("Possibility of change") +
+  scale_y_continuous(name = "",
                      limits = c(0.9, 4.1),
                      breaks = c(1, 2, 3, 4),
-                     labels = c("For sure no: 1", "Maybe no: 2", "Maybe yes: 3", "For sure yes: 4")) + 
-  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
-  geom_point(size = 2, alpha = 0.8) + 
-  geom_smooth()
+                     labels = c("for sure no", "maybe no", "maybe yes", "for sure yes")) + 
+  scale_x_discrete(limits = c("biological", "cultural", "structural")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") 
+ggsave("possibility_change_blank.png", width = 7)
+
 ```
 
 ### Normativity
 ```{r normativity}
 # Plot responses: normativity
 ggplot(data, aes(x = condition, y = normativity)) +
-  ggtitle("Normativity") +
-  scale_y_continuous(name = "Attitude towards non-conformity",
-                     limits = c(0.9, 6.1),
+  # ggtitle("Normativity") +
+  scale_y_reverse(name = "",
                      breaks = c(1, 2, 3, 4, 5, 6),
-                     labels = c("Very good: 1", "Pretty good: 2", "A little good: 3", "A little bad: 4", "Pretty bad: 5", "Very bad: 6")) +
+                     labels = c("very good", "pretty good", "a little good", "a little bad", "pretty bad", "very bad")) +
   geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.1) + 
@@ -416,30 +430,46 @@ ggplot(data, aes(x = condition, y = normativity)) +
                color = "black",
                fill = "black",
                size = 5)
-ggsave("normativity.png", width = 8)
+ggsave("normativity.png", width = 7)
 
+
+# Blank
+ggplot(data, aes(x = condition, y = normativity)) +
+  # geom_point() +
+  scale_y_reverse(name = "",
+                  limits = c(6, 1),
+                  breaks = c(1:6),
+                  labels = c("very good", "pretty good", "a little good", "a little bad", "pretty bad", "very bad")) +
+  geom_hline(yintercept = mean(c(1:6)), linetype = "dashed") +
+  scale_x_discrete(limits = c("biological", "cultural", "structural"))
+ggsave("normativity_blank.png", width = 7)
+```
+
+```{r normativity-age}
 # Plot responses: normativity by age
 ggplot(data, 
        aes(x = age, y = normativity)) +
   facet_wrap(vars(condition)) +
-  ggtitle("Normativity") +
-  scale_y_continuous(name = "Attitude towards non-conformity",
-                     limits = c(0.9, 6.1),
-                     breaks = c(1, 2, 3, 4, 5, 6),
-                     labels = c("Very good: 1", "Pretty good: 2", "A little good: 3", "A little bad: 4", "Pretty bad: 5", "Very bad: 6")) +
-  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  # ggtitle("Normativity") +
+  scale_y_reverse(name = "Individual non-conformity",
+                     limits = c(6.1, 0.9),
+                     breaks = c(1:6),
+                     labels = c("very good", "pretty good", "a little good", "a little bad", "pretty bad", "very bad")) +
+  geom_hline(yintercept = mean(c(1:6)), linetype = "dashed") +
   geom_point(size = 2, alpha = 0.8) + 
   geom_smooth()
+ggsave("normativity_age.png")
 ```
 
 ### Switched context
 ```{r}
 # Plot responses: switched context
 ggplot(data, aes(x = condition, y = switched_context)) +
-  ggtitle("Switched context") +
-  scale_y_continuous(name = "Prediction about member outside context",
+  # ggtitle("Switched context") +
+  scale_y_continuous(name = "",
+                     # name = "Prediction about member outside context",
                      breaks = c(1, 2, 3, 4),
-                     labels = c("For sure starberries: 1", "Maybe starberries: 2", "Maybe roundberries: 3", "For sure roundberries: 4")) +
+                     labels = c("for sure [same berry]", "maybe [same berry]", "maybe [other berry]", "for sure [other berry]")) +
   geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.1) + 
@@ -454,21 +484,36 @@ ggplot(data, aes(x = condition, y = switched_context)) +
                color = "black",
                fill = "black",
                size = 5)
-ggsave("switched_context.png", width = 8)
+ggsave("switched_context.png", width = 7)
 
 
-# Plot responses: normativity by age
+# Blank
+ggplot(data, aes(x = condition, y = switched_context)) +
+  # ggtitle("Switched context") +
+  scale_y_continuous(name = "",
+                     # name = "Prediction about member outside context",
+                     limits = c(0.9, 4.1),
+                     breaks = c(1, 2, 3, 4),
+                     labels = c("for sure [same berry]", "maybe [same berry]", "maybe [other berry]", "for sure [other berry]")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
+  scale_x_discrete(limits = c("biological", "cultural", "structural"))
+ggsave("switched_context_blank.png", width = 7)
+
+```
+
+```{r vis-switched-context-age}
+# Plot responses: switched context by age
 ggplot(data, 
-       aes(x = age, y = normativity)) +
+       aes(x = age, y = switched_context)) +
   facet_wrap(vars(condition)) +
-  ggtitle("Normativity") +
-  scale_y_continuous(name = "Attitude towards non-conformity",
-                     limits = c(0.9, 6.1),
-                     breaks = c(1, 2, 3, 4, 5, 6),
-                     labels = c("Very good: 1", "Pretty good: 2", "A little good: 3", "A little bad: 4", "Pretty bad: 5", "Very bad: 6")) +
-  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5, 6)), linetype = "dashed") +
+  ggtitle("Switched context") +
+  scale_y_continuous(name = "Prediction about member outside context",
+                     breaks = c(1, 2, 3, 4),
+                     labels = c("For sure [same berry]", "Maybe [same berry]", "Maybe [other berry]", "For sure [other berry]")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4)), linetype = "dashed") +
   geom_point(size = 2, alpha = 0.8) + 
   geom_smooth()
+ggsave("switched_context_age.png")
 ```
 
 ### Target of intervention
@@ -476,22 +521,55 @@ ggplot(data,
 # Plot: target of intervention
 ggplot(data_tidy_intervention, 
        aes(x = condition, fill = intervention_coded)) +
+  # ggtitle("Target of intervention") 
   geom_bar(position = "fill") +
   guides(fill = guide_legend(title = NULL)) +
-  scale_y_continuous(name = "What would you do, so that \n Zarpies can eat okinberies?",
-                     labels = scales::percent) +
-  scale_fill_manual(values = intervention_colors) + 
-  ggtitle("Target of intervention") 
+  scale_y_continuous(name = "",
+                     # name = "What would you do, so that \n Zarpies can eat roundberries?",
+                     labels = scales::percent,
+                     expand = c(0,0)) +
+  scale_x_discrete(expand = c(0,0)) +
+  scale_fill_manual(values = intervention_colors) 
 ggsave("intervention.png", width = 10)
+
+
+# Plot: target of intervention
+ggplot(data_tidy_intervention, 
+       aes(x = condition, fill = intervention_coded)) +
+  # ggtitle("Target of intervention") 
+  geom_bar(position = "fill") +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "",
+                     # name = "What would you do, so that \n Zarpies can eat roundberries?",
+                     labels = scales::percent,
+                     expand = c(0,0)) +
+  scale_x_discrete(expand = c(0,0)) +
+  scale_fill_manual(values = intervention_colors_highlight) 
+ggsave("intervention_highlight.png", width = 10)
+```
+
+```{r plot-intervention}
+# by age
+ggplot(data_tidy_intervention, 
+       aes(x = age, y = intervention_coded, color = intervention_coded)) +
+  facet_wrap(vars(condition)) +
+  geom_point() +
+  scale_color_manual(values = intervention_colors) + 
+  theme(legend.position = "none") 
 ```
 
 ### Difficulty of intervention
 ```{r intervention-diff}
 # Plot: difficulty of intervention by condition
 ggplot(data_tidy_intervention, 
-       aes(x = condition, y = intervention_diff, color = intervention_coded)) +
+       aes(x = condition, y = intervention_diff)) +
+  # ggtitle("Difficulty of intervention by condition") +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.1) +
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
   stat_summary(fun = "mean",
                position = position_dodge(width = 0.8),
                geom = "point",
@@ -500,17 +578,22 @@ ggplot(data_tidy_intervention,
                fill = "black",
                size = 5) +
   guides(fill = guide_legend(title = NULL)) +
-  scale_y_continuous(name = "Would it be easy or hard to do that?",
-                     labels = c("Very easy: 1", "A little easy: 2", "A little hard: 3", "Very hard: 4")) +
-  ggtitle("Difficulty of intervention by condition") 
-ggsave("intervention_diff_condition.png", width = 10)
+  scale_y_continuous(name = "",
+                     # name = "Would it be easy or hard to do that?",
+                     labels = c("very easy", "a little easy", "a little hard", "very hard"))
+ggsave("intervention_diff_condition.png", width = 7)
 
 
 # Plot: difficulty of intervention by intervention type
 ggplot(data_tidy_intervention, 
-       aes(x = intervention_coded, y = intervention_diff, color = condition)) +
+       aes(x = intervention_coded, y = intervention_diff)) +
+  # ggtitle("Difficulty of intervention by target of intervention") +
   geom_point(position = position_jitter(width = 0.2, height = 0.075),
              size = 2, alpha = 0.3) +
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
   stat_summary(fun = "mean",
                position = position_dodge(width = 0.8),
                geom = "point",
@@ -518,12 +601,363 @@ ggplot(data_tidy_intervention,
                color = "black",
                fill = "black",
                size = 5) +
-  scale_color_manual(values = condition_colors) +
+  # scale_color_manual(values = condition_colors) +
   scale_x_discrete(name = "Target of intervention") +
   scale_y_continuous(name = "Would it be easy or hard to do that?",
-                     labels = c("Very easy: 1", "A little easy: 2", "A little hard: 3", "Very hard: 4")) +
-  ggtitle("Difficulty of intervention by target of intervention") 
+                     labels = c("very easy", "a little easy", "a little hard", "very hard"))
 ggsave("intervention_diff.png", width = 18)
+```
+
+
+
+## Models
+### Possibility of change
+```{r target-analysis-possibility-change}
+# Possibility of change: linear model, controlling for difficulty of intervention
+possibility_change_lm <- lm(possibility_change ~ condition + intervention_diff,
+                            data = data)
+
+# main effect of condition, controlling for intervention difficulty
+possibility_change_lm %>% 
+  aov() %>% 
+  summary()
+
+# compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+possibility_change_lm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "fdr") %>% 
+  summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "biological") %>% select(possibility_change),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "cultural") %>% select(possibility_change),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "structural") %>% select(possibility_change),
+       mu = mean(1:4))
+```
+
+
+```{r}
+# Possibility of change: Bayesian linear model, controlling for difficulty of intervention
+possibility_change_brm <- brm(possibility_change ~ condition + intervention_diff,
+                              data = data,
+                              file = "possibility_change_brm")
+possibility_change_brm %>% 
+  pp_check() # posterior predictive check looks weird because measure is actually ordinal, not continuous?
+
+possibility_change_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+possibility_change_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural > 0") # Structural vs Internalist (cultural)
+
+possibility_change_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+### Normativity
+```{r target-analysis-normativity}
+# Normativity: linear model, controlling for difficulty of intervention
+normativity_lm <- lm(normativity ~ condition + intervention_diff,
+                     data = data)
+
+# main effect of condition, controlling for intervention difficulty
+normativity_lm %>% 
+  aov() %>% 
+  summary()
+
+# compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+normativity_lm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "fdr") %>% 
+  summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "biological") %>% select(normativity),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "cultural") %>% select(normativity),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "structural") %>% select(normativity),
+       mu = mean(1:6))
+```
+
+```{r}
+# Normativity: Bayesian linear model, controlling for difficulty of intervention
+normativity_brm <- brm(normativity ~ condition + intervention_diff,
+                       data = data,
+                       file = "normativity_brm")
+
+normativity_brm %>% 
+  pp_check() # posterior predictive check looks weird because measure is actually ordinal, not continuous?
+
+normativity_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+normativity_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural > 0") # Structural vs Internalist (cultural)
+
+normativity_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+
+### Switched context
+```{r target-analysis-switched-context}
+# Switched context: linear model, controlling for difficulty of intervention
+switched_context_lm <- lm(switched_context ~ condition + intervention_diff,
+                            data = data)
+
+# main effect of condition, controlling for intervention difficulty
+switched_context_lm %>% 
+  aov() %>% 
+  summary()
+# 
+# # compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+# switched_context_lm %>% 
+#   emmeans("condition") %>% 
+#   pairs(adjust = "fdr") %>% 
+#   summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "biological") %>% select(switched_context),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "cultural") %>% select(switched_context),
+       mu = mean(1:4))
+
+t.test(data %>% filter(condition == "structural") %>% select(switched_context),
+       mu = mean(1:4))
+```
+
+
+```{r}
+# Switched context: Bayesian linear model, controlling for difficulty of intervention
+switched_context_brm <- brm(switched_context ~ condition + intervention_diff,
+                              data = data,
+                              file = "switched_context_brm")
+switched_context_brm %>% 
+  pp_check() # posterior predictive check looks weird because measure is actually ordinal, not continuous?
+
+switched_context_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+switched_context_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural > 0") # Structural vs Internalist (cultural)
+
+switched_context_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+
+### Target of intervention
+Analyze whether counts of coded responses are independent of condition, using Fisher's exact test (rather than chi-square because of small sample size).
+```{r}
+# Fisher's exact test: are the proportion of responses different across the 3 conditions?
+fisher.test(data_intervention_counts %>% select(-condition), 
+            workspace = 2e8)
+```
+
+#### Modify Zarpies biology
+```{r intervention-modify-Zarpies-biology-glm}
+# Target of intervention: modify Zarpies biology: logistic regression, controlling for difficulty of intervention 
+glm(modify_group_biology ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-modify-Zarpies-biology-brglm, warning=FALSE}
+modify_group_biology_glm <- glm(modify_group_biology ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty? --> yes
+modify_group_biology_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted --> biological > cultural/structural
+modify_group_biology_glm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "FDR") %>% 
+  summary()
+
+# # more than half in biological condition? 
+# binom.test(x = data_intervention %>% filter(condition == "biological") %>% pull(modify_group_biology) %>% sum(),
+#            n = data_intervention %>% filter(condition == "biological") %>% pull(modify_group_biology) %>% length(),
+#            p = 0.5, # compare against half
+#            alternative = "two.sided")
+```
+
+```{r}
+# Target of intervention: modify Zarpies biology: Bayesian logistic regression, controlling for difficulty of intervention
+modify_Zarpies_biology_brm <- brm(modify_Zarpies_biology ~ condition + intervention_diff,
+    family = "binomial",
+    data = data.intervention,
+    file = "modify_Zarpies_biology_brm")
+
+modify_Zarpies_biology_brm %>% 
+  pp_check() 
+
+modify_Zarpies_biology_brm %>% 
+  hypothesis("conditionstructural < 0") # Structural vs Internalist (biological)
+
+modify_Zarpies_biology_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural < 0") # Structural vs Internalist (cultural)
+
+modify_Zarpies_biology_brm %>% 
+  hypothesis("conditioninternalist_cultural < 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+#### Modify Zarpies beliefs/culture
+```{r}
+# Target of intervention: modify Zarpies beliefs/culture: logistic regression, controlling for difficulty of intervention 
+glm(modify_group_beliefs_culture ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implemented logistic regression with Firth bias-reduction. Otherwise proceed with glm. 
+
+```{r intervention-modify-Zarpies-beliefs-culture-brglm, warning=FALSE}
+modify_group_beliefs_culture <- brglm(modify_group_beliefs_culture ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# main effect of condition, controlling for intervention difficulty? (ANOVA)
+modify_group_beliefs_culture %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+modify_group_beliefs_culture %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "FDR") %>% 
+  summary()
+
+# # more than half in cultural condition? 
+# binom.test(x = data_intervention %>% filter(condition == "cultural") %>% pull(modify_group_beliefs_culture) %>% sum(),
+#            n = data_intervention %>% filter(condition == "cultural") %>% pull(modify_group_beliefs_culture) %>% length(),
+#            p = 0.5, # compare against half
+#            alternative = "two.sided")
+```
+
+```{r}
+# Target of intervention: modify Zarpies beliefs/culture: Bayesian logistic regression, controlling for difficulty of intervention
+modify_Zarpies_beliefs_culture_brm <- brm(modify_Zarpies_beliefs_culture ~ condition + intervention_diff,
+    family = "binomial",
+    data = data.intervention,
+    file = "modify_Zarpies_beliefs_culture_brm")
+
+modify_Zarpies_beliefs_culture_brm %>% 
+  pp_check() 
+
+modify_Zarpies_beliefs_culture_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+modify_Zarpies_beliefs_culture_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural < 0") # Structural vs Internalist (cultural)
+
+modify_Zarpies_beliefs_culture_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+#### Change environment
+```{r intervention-change-environment-brglm, warning=FALSE}
+# Target of intervention: logistic regression, controlling for difficulty of intervention
+modify_environment_glm <- glm(modify_environment ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) 
+```
+
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implemented logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r}
+# main effect of condition, controlling for intervention difficulty? (ANOVA)
+modify_environment_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+modify_environment_glm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "fdr") %>% 
+  summary()
+
+# odds ratios?
+exp(cbind(coef(modify_environment_glm), confint(modify_environment_glm)))  
+
+
+# # more than half in structural condition? 
+# binom.test(x = data_intervention %>% filter(condition == "structural") %>% pull(modify_environment) %>% sum(),
+#            n = data_intervention %>% filter(condition == "structural") %>% pull(modify_environment) %>% length(),
+#            p = 0.5, # compare against half
+#            alternative = "two.sided")
+```
+
+```{r}
+# Target of intervention: acquire okinberries: Bayesian logistic regression, controlling for difficulty of intervention
+acquire_okinberries_brm <- brm(modify_Zarpies_beliefs_culture ~ condition + intervention_diff,
+    family = "binomial",
+    data = data.intervention,
+    file = "acquire_okinberries_brm")
+
+acquire_okinberries_brm %>% 
+  pp_check() 
+
+acquire_okinberries_brm %>% 
+  hypothesis("conditionstructural > 0") # Structural vs Internalist (biological)
+
+acquire_okinberries_brm %>% 
+  hypothesis("conditionstructural - conditioninternalist_cultural > 0") # Structural vs Internalist (cultural)
+
+acquire_okinberries_brm %>% 
+  hypothesis("conditioninternalist_cultural > 0") # Internalist (cultural) vs Internalist (biological)
+```
+
+# Exploratory analysis
+## Correlations between measures
+```{r }
+ggplot(data, 
+       aes(x = switched_context, y = normativity)) +
+  facet_wrap(vars(condition)) +
+  geom_point(position = position_jitter(width = 0.1, height = 0.1),
+             size = 2, alpha = 0.3) +
+  geom_smooth(method = "lm", se = TRUE, level = 0.95) +
+  scale_y_continuous(name = "non-conformity of group member",
+                     # name = "attitude towards non-conformity",
+                     breaks = c(1, 2, 3, 4, 5, 6),
+                     labels = c("very, very good", "pretty good", "a little good", "a little bad", "pretty bad", "very, very bad")) +
+  scale_x_continuous(name = "generalization to switched context",
+                     # name = "Prediction about member outside context",
+                     breaks = c(1, 2, 3, 4),
+                     labels = c("[same berry]", "", "", "[other berry]")) 
+ggsave("switched_context_normativity.png", width = 12)
+
+```
+
+## Age
+```{r possibility-change-age}
+lm(possibility_change ~ condition * age + intervention_diff,
+   data = data) %>% 
+  anova()
+```
+```{r normativity-age}
+lm(normativity ~ condition * age + intervention_diff,
+   data = data) %>% 
+  anova()
+```
+
+```{r switched-context-age}
+lm(switched_context ~ condition * age + intervention_diff,
+   data = data) %>% 
+  anova()
 ```
 
 

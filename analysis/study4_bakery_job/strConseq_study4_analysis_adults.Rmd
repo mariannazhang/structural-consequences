@@ -1,0 +1,636 @@
+---
+title: "Structural consequences pilot 4 analysis"
+author: "Marianna Zhang, Amy Miyahara, Ellen Markman"
+date: sys.date()
+output: pdf_document
+---
+# Introduction
+
+
+# Methods
+
+```{r setup}
+# Load any libraries we need
+library(here)
+library(tidyverse)  # tidying and wrangling data, visualizations
+library(ggthemes)   # visualization themes for ggplot2
+library(emmeans)
+
+# Set visualization theme
+theme_set(
+  ggthemes::theme_few() +
+    theme(text = element_text(size = 16), # large text size for presentation figures
+          axis.ticks.x = element_blank()) # remove x-axis ticks
+)
+
+condition_colors = c("biological" = "#D9695F",
+                     "cultural" = "#F2BF80",
+                     "structural" = "#49808C")
+
+intervention_colors = c("change group biology" = "#D9695F",
+                        "change group beliefs/values" = "#F2BF80",
+                        
+                        # "change group" = "#D9695F",
+                        # "change structural context" = "#49808C",
+                        
+                        "provide job training/tools to group" = "#8F756A",
+                        "create more jobs or access to jobs" = "#49808C",
+                        
+                        "change job wages, value, hours, work" = "#D5C7CE",
+                        "ambiguous" = "#D9D9D9",
+                        "other" = "#C3C7B6",
+                        "don't know" = "#9E9E9E")
+```
+
+```{r import-data}
+# Import data for analysis, using here() package to locate the file, and read_excel() (for excel file) or read_csv() (for csv file) to read in the file
+data_raw <- read_csv(here("data", "strConseq_data_study4_adults_coded.csv"))
+```
+
+
+```{r clean-recode-data}
+
+data <- data_raw %>%
+  # Filter out those who didn't consent
+  filter(consent == "I do consent to participate") %>% 
+  
+  # Add participant ID, coalesce redundant columns
+  mutate(participant = row_number(),
+         acceptability_fc = acceptability,
+         acceptability = coalesce(acceptability_a, acceptability_b),
+         switched_context_fc = switched_context,
+         switched_context = coalesce(switched_context_a, switched_context_b),
+         intervention_diff_fc = intervention_diff,
+         intervention_diff = coalesce(intervention_diff_a, intervention_diff_b),
+         age = age_2_TEXT) %>% 
+  
+  rename(check_job_mention = check_job_1) %>% 
+  
+  # Keep columns we care about
+  select(participant, 
+         condition, 
+         starts_with("check"),
+         acceptability,
+         switched_context,
+         diff,
+         intervention_coded, 
+         intervention_diff,
+         age, gender:ses) %>% 
+  
+  # Recoding and cleaning
+  mutate(condition = condition %>% 
+           factor(levels = c("biological",
+                             "cultural",
+                             "structural")),
+         acceptability = acceptability %>% recode("Very, very bad" = 1,
+                                                  "Pretty bad" = 2,
+                                                  "A little bad" = 3,
+                                                  "A little good" = 4,
+                                                  "Pretty good" = 5,
+                                                  "Very, very good" = 6),
+         diff = diff %>% recode("Very similar" = 1,
+                                "Somewhat similar" = 2,
+                                "Equally similar and different" = 3,
+                                "Somewhat different" = 4,
+                                "Very different" = 5),
+         switched_context = switched_context %>% recode("definitely cleaner" = 1,
+                                                        "probably cleaner" = 2,
+                                                        "maybe cleaner" = 3,
+                                                        "maybe cake decorator" = 4,
+                                                        "probably cake decorator" = 5,
+                                                        "definitely cake decorator" = 6),
+         intervention_diff = intervention_diff %>% recode("Very easy" = 1,
+                                                          "Pretty easy" = 2,
+                                                          "A little easy" = 3,
+                                                          "A little hard" = 4,
+                                                          "Pretty hard" = 5,
+                                                          "Very hard" = 6),
+         education = education %>% factor(
+           levels = c(
+             "Less than high school",
+             "High school/GED",
+             "Some college",
+             "Bachelor's (B.A., B.S.)",
+             "Master's (M.A., M.S.)",
+             "Doctoral (Ph.D., J.D., M.D.)",
+             "Prefer not to specify")),
+         ses = ses %>% factor(levels = c("Poor",
+                                         "Working class",
+                                         "Middle class",
+                                         "Affluent",
+                                         "Prefer not to specify")))
+
+```
+
+## Participants
+
+```{r exclude-sample-size}
+# Record exclusions (participants may be counted twice)
+sample <- data %>% 
+  summarize(check_group = sum(check_group != "Reds,Blues"),
+            check_job = sum(check_job != "Reds"),
+            check_job_mention = sum(check_job_mention != "Cake decorater,Cleaner"),
+            check_task = sum(check_task != "Learning about Reds and Blues and answering questions about them"),
+            n_collect = n())
+
+# Exclude participants and remove exclusion columns
+data <- data %>%
+  filter(check_group == "Reds,Blues" &
+           check_job == "Reds" &
+           check_job_mention == "Cake decorater,Cleaner" &
+           check_task == "Learning about Reds and Blues and answering questions about them") %>% 
+  select(-starts_with("check"))
+
+# Record number of participants in actual sample after exclusions, exclusion rate
+sample <- sample %>%  
+  mutate(n = nrow(data),
+         n_excl = n_collect - n,
+         excl_rate = n_excl/n_collect)
+
+# Record number of participants in actual sample per condition
+sample_condition <- data %>% 
+  group_by(condition) %>% 
+  summarize(n = length(unique(participant)))
+```
+
+```{r dem}
+# Record demographics of actual sample
+## Age
+dem_age <- data %>%
+  mutate(age_bin = case_when(
+           age < 18 ~ "<18",
+           age > 17 & age <=24 ~ "18-24",
+           age > 24 & age <=54 ~ "25-54",
+           age > 55 & age <=64 ~ "55-64",
+           age > 65 ~ "65+",
+           TRUE ~ "NA")) %>% 
+  count(age_bin) %>% 
+  mutate(prop = n/sample$n)
+
+## Gender
+dem_gender <- data %>%
+  count(gender, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
+
+## Race
+dem_race <- data %>%
+  count(race, sort = TRUE) %>% 
+  mutate(prop = n/sample$n)
+
+## Education
+dem_education <- data %>%
+  count(education) %>% 
+  mutate(prop = n/sample$n)
+
+## Socio-economic status (SES) 
+dem_ses <- data %>%
+  count(ses) %>% 
+  mutate(prop = n/sample$n)
+
+```
+
+
+## Procedure
+
+
+# Results
+
+```{r tidy-data}
+# Gather long data to tidy form, and rename
+data_tidy <- data %>% 
+  gather(measure, response, 
+         c(acceptability,
+           switched_context,
+           diff, 
+           intervention_coded, intervention_diff)) %>% 
+  mutate(measure = measure %>% factor(levels = c("acceptability",
+                                                 "switched_context",
+                                                 "diff", 
+                                                 "intervention_coded", "intervention_diff")))
+
+# Split out open-ended text responses
+data_tidy_intervention <- data_tidy %>% 
+  filter(measure == "intervention_coded" | measure == "intervention_diff") %>% 
+  spread(measure, response) %>% 
+  mutate(intervention_coded = intervention_coded %>% 
+           factor(levels = c("change group biology",
+                             "change group beliefs/values",
+                             "provide job tools to group",
+                             "provide job training/tools to group",
+                             "create more jobs or access to jobs", 
+                             "change job wages, value, hours, work",
+                             "change job conditions",
+                             "other",
+                             "ambiguous",
+                             "don't know")),
+         intervention_diff = intervention_diff %>% as.numeric())
+
+# Remove those responses from data_tidy, and format responses as numeric
+data_tidy <- data_tidy %>% 
+  filter(measure != "intervention_coded") %>% 
+  mutate(response = response %>% as.numeric())
+```
+
+## Generalization (switched context)
+```{r generalization}
+# Plot generalization results across the 3 conditions
+ggplot(data = data, mapping = aes(x = condition, y = switched_context)) + 
+  geom_hline(yintercept = mean(c(1:6)), linetype = "dashed") +
+  scale_y_continuous(name = "Belief that different context changes job", 
+                     breaks = c(1:6),
+                     limits = c(0.8, 6.2),
+                     labels = c("definitely cleaner", "probably cleaner", "maybe cleaner", "maybe cake decorator", "probably cake decorator", "definitely cake decorator")) +
+  # scale_x_discrete(labels = c(paste0("biological", " (n = ", as.character(sample_condition$n[1]), ")"),
+  #                             paste0("cultural", " (n = ", as.character(sample_condition$n[2]), ")"),
+  #                             paste0("structural", " (n = ", as.character(sample_condition$n[3]), ")"))) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+
+# Now save the plot you just generated as a .png
+ggsave("adults_switched_context.png")
+```
+
+```{r switched-context-analysis}
+# switched context: linear model, controlling for difficulty of intervention
+switched_context_lm <- lm(switched_context ~ condition + intervention_diff,
+              data = data)
+
+# main effect of condition, controlling for intervention difficulty
+switched_context_lm %>% 
+  aov() %>% 
+  summary()
+
+# # compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+# switched_context_lm %>% 
+#   emmeans("condition") %>% 
+#   pairs(adjust = "fdr") %>% 
+#   summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "biological") %>% select(switched_context),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "cultural") %>% select(switched_context),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "structural") %>% select(switched_context),
+       mu = mean(1:6))
+```
+
+## Acceptability
+```{r acceptability}
+ggplot(data = data, mapping = aes(x = condition, y = acceptability)) + 
+  geom_hline(yintercept = mean(c(1:6)), linetype = "dashed") +
+  scale_y_continuous(name = "Acceptability of job disparity", 
+                     breaks = c(1:6),
+                     limits = c(0.8, 6.2),
+                     labels = c("very bad", "pretty bad", "a little bad", "a little good", "pretty good", "very good")) + 
+  # scale_x_discrete(labels = c(paste0("biological", " (n = ", as.character(sample_condition$n[1]), ")"),
+  #                             paste0("cultural", " (n = ", as.character(sample_condition$n[2]), ")"),
+  #                             paste0("structural", " (n = ", as.character(sample_condition$n[3]), ")"))) +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+
+ggsave("adults_acceptability.png")
+```
+
+
+```{r acceptability-analysis}
+# Acceptability: linear model, controlling for difficulty of intervention
+acceptability_lm <- lm(acceptability ~ condition + intervention_diff,
+                    data = data)
+
+# main effect of condition, controlling for intervention difficulty
+acceptability_lm %>% 
+  aov() %>% 
+  summary()
+
+# compare all pairwise condition means (controlling for difficulty of intervention), FDR adjustment for all comparisons
+acceptability_lm %>%
+  emmeans("condition") %>%
+  pairs(adjust = "fdr") %>%
+  summary()
+
+# compare conditions against chance
+t.test(data %>% filter(condition == "biological") %>% select(acceptability),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "cultural") %>% select(acceptability),
+       mu = mean(1:6))
+
+t.test(data %>% filter(condition == "structural") %>% select(acceptability),
+       mu = mean(1:6))
+```
+### Group differences
+```{r group-diff}
+# Plot responses: group differences
+ggplot(data, aes(x = condition, y = diff)) +
+  scale_y_continuous(name = "Blues and Reds more similar or more different?",
+                     limits = c(0.9, 5.1),
+                     breaks = c(1, 2, 3, 4, 5),
+                     labels = c("Very similar", "Somewhat similar", "Equally similar and different", "Somewhat different", "Very different")) +
+  geom_hline(yintercept = mean(c(1, 2, 3, 4, 5)), linetype = "dashed") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.1),
+             size = 2, alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5)
+ggsave("adults_group_diff.png")
+```
+
+## Intervention
+```{r intervention-cleaning}
+# Split off target of intervention
+data_intervention <- data %>% 
+  mutate(
+    # Cleaning
+    intervention_coded = intervention_coded %>% 
+      str_replace_all(" ", "_") %>% 
+      str_replace_all("/", "_") %>% 
+      str_replace_all("'", "") %>% 
+      str_replace_all(",", ""), 
+      # factor(intervention_codes_clean),
+    # Add dummy variable for spreading
+    counts = 1) %>% 
+  # # Add any missing intervention code values, keeping all other columns the same (workaround for spread(drop = FALSE))
+  # complete(nesting(!!!select(., participant:switched_context, intervention_diff)), intervention_coded) %>% 
+  # Spread
+  spread(intervention_coded, counts, fill = 0)
+
+# make contingency table of intervention responses
+data_intervention_counts <- data_intervention %>% 
+  group_by(condition) %>% 
+  summarize(change_group_biology = sum(change_group_biology),
+            change_group_beliefs_values = sum(change_group_beliefs_values),
+            change_job_wages_value_hours_work = sum(change_job_wages_value_hours_work),
+            provide_job_training_tools_to_group = sum(provide_job_training_tools_to_group),
+            create_more_jobs_or_access_to_jobs = sum(create_more_jobs_or_access_to_jobs),
+            ambiguous = sum(ambiguous),
+            dont_know = sum(dont_know))
+            # "NA" = sum(`<NA>`))
+```
+
+```{r plot-intervention}
+# Plot: target of intervention
+ggplot(data_tidy_intervention, 
+       aes(x = condition, fill = intervention_coded)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = intervention_colors) +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "",
+                     labels = scales::percent,
+                     expand = c(0,0)) +
+  scale_x_discrete(expand = c(0,0)) 
+  # scale_x_discrete(expand = c(0,0),
+  #                  labels = c(paste0("biological", " (n = ",
+  #                                    as.character(sample_condition$n[1]), ")"),
+  #                             paste0("cultural", " (n = ",
+  #                                    as.character(sample_condition$n[2]), ")"),
+  #                             paste0("structural", " (n = ",
+  #                                    as.character(sample_condition$n[3]), ")"))) 
+
+ggsave("adults_intervention.png", width = 10)
+```
+
+
+## Overall differences across conditions
+```{r intervention-initial}
+# Analyze whether counts of coded responses are independent of condition, using Fisher's exact test (rather than chi-square because of small sample size).
+# Fisher's exact test: are the proportion of responses different across the 3 conditions?
+fisher.test(data_intervention_counts %>% 
+              dplyr::select(-condition), workspace = 2e8)
+```
+
+## Individual codes across conditions
+```{r intervention-change_group_beliefs_culture}
+# Target of intervention: change group beliefs/culture: logistic regression, controlling for difficulty of intervention 
+glm(change_group_beliefs_values ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-change_group_beliefs_culture-2, warning=FALSE}
+change_group_beliefs_values_glm <- brglm(change_group_beliefs_values ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty?
+change_group_beliefs_values_glm %>%
+  aov() %>%
+  summary()
+
+# # simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+# change_group_beliefs_values_glm %>% 
+#   emmeans("condition") %>% 
+#   pairs(adjust = "FDR") %>% 
+#   summary()
+```
+
+```{r intervention-create_more_jobs_or_access_to_jobs}
+# Target of intervention: create_more_jobs_or_access_to_jobs: logistic regression, controlling for difficulty of intervention 
+glm(create_more_jobs_or_access_to_jobs ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-create_more_jobs_or_access_to_jobs-2, warning=FALSE}
+create_more_jobs_or_access_to_jobs_glm <- glm(create_more_jobs_or_access_to_jobs ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty?
+create_more_jobs_or_access_to_jobs_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+create_more_jobs_or_access_to_jobs_glm %>%
+  emmeans("condition") %>%
+  pairs(adjust = "FDR") %>%
+  summary()
+```
+
+```{r intervention-provide_job_training_to_group}
+# Target of intervention: provide_job_training_to_group: logistic regression, controlling for difficulty of intervention 
+glm(provide_job_training_tools_to_group ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-provide_job_training_to_group-2, warning=FALSE}
+provide_job_training_to_group_glm <- glm(provide_job_training_tools_to_group ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty?
+provide_job_training_to_group_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+provide_job_training_to_group_glm %>%
+  emmeans("condition") %>%
+  pairs(adjust = "FDR") %>%
+  summary()
+```
+
+## Group vs structural interventions
+
+```{r}
+# Target of intervention: target_group: logistic regression, controlling for difficulty of intervention 
+glm(target_group ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-target_group-2, warning=FALSE}
+target_group_glm <- glm(target_group ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty?
+target_group_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+target_group_glm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "FDR") %>% 
+  summary()
+```
+
+
+```{r}
+# Target of intervention: target_structure: logistic regression, controlling for difficulty of intervention 
+glm(target_structure ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention) %>% 
+  summary()
+```
+If observe quasi-complete separation in the logistic regression for the internalist_cultural condition, implement logistic regression with Firth bias-reduction. Otherwise proceed with glm.
+
+```{r intervention-target_structure-2, warning=FALSE}
+target_structure_glm <- glm(target_structure ~ condition + intervention_diff,
+    family = "binomial",
+    data = data_intervention)
+
+# ANOVA for main effect of condition, controlling for intervention difficulty?
+target_structure_glm %>%
+  aov() %>%
+  summary()
+
+# simultaneous pairwise comparisons (condition 1v2, 2v3, 1v3), adjusted
+target_structure_glm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "FDR") %>% 
+  summary()
+```
+
+
+## Difficulty of intervention
+```{r intervention-diff}
+# Plot: difficulty of intervention by condition
+ggplot(data_tidy_intervention, 
+       aes(x = condition, y = intervention_diff)) +
+  # ggtitle("Difficulty of intervention by condition") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.075),
+             size = 2, alpha = 0.1) +
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) +
+  guides(fill = guide_legend(title = NULL)) +
+  scale_y_continuous(name = "")
+                     # name = "Would it be easy or hard to do that?")
+ggsave("intervention_diff_condition.png", width = 7)
+
+
+# Plot: difficulty of intervention by intervention type
+ggplot(data_tidy_intervention, 
+       aes(x = intervention_coded, y = intervention_diff)) +
+  # ggtitle("Difficulty of intervention by target of intervention") +
+  geom_point(position = position_jitter(width = 0.2, height = 0.075),
+             size = 2, alpha = 0.3) +
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.8),
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               position = position_dodge(width = 0.8),
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "black",
+               size = 5) +
+  # scale_color_manual(values = condition_colors) +
+  scale_x_discrete(name = "Target of intervention") +
+  scale_y_continuous(name = "Would it be easy or hard to do that?",
+                     limits = c(0.8, 6.2))
+ggsave("intervention_diff.png", width = 18)
+```
+
+
+```{r intervention-diff-analysis}
+# intervention_diff: linear model
+intervention_diff_lm <- lm(intervention_diff ~ condition,
+                           data = data)
+
+# main effect of condition
+intervention_diff_lm %>% 
+  aov() %>% 
+  summary()
+
+# compare all pairwise condition means, FDR adjustment for all comparisons
+intervention_diff_lm %>% 
+  emmeans("condition") %>% 
+  pairs(adjust = "fdr") %>% 
+  summary()
+
+```
+
+# Discussion
+
+# Pilot analysis for main study
+

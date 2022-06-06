@@ -1,5 +1,11 @@
-.Rproj.user
+.Rproj.user*
 .Rhistory
 .RData
 .Ruserdata
-.ini
+*.ini
+*.pptm
+*.pptx
+study_summary.xlsx
+*pilot*
+/reports
+~$*
